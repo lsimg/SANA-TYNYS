@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanaTynys — Календарь пути</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section>
+    <div class="section-label">Календарь</div>
+    <h1 class="section-title">Путь по дням</h1>
+    <p class="section-desc">Отмечай не для оценки себя, а чтобы видеть паттерны. Срыв — это информация. Ты продолжаешь путь.</p>
+
+    <div class="panel reveal">
+      <h2 class="card-title">Сегодня</h2>
+      <div class="choice-grid">
+        <button class="mini-btn mint" data-status="smoke_free">Сегодня без никотина</button>
+        <button class="mini-btn" data-status="craving">Была тяга</button>
+        <button class="mini-btn rose" data-status="relapse">Был срыв</button>
+        <button class="mini-btn" data-status="skipped">Просто день</button>
+      </div>
+      <div class="field-group mt">
+        <label for="calendarNote">Заметка без давления</label>
+        <textarea id="calendarNote" placeholder="Что помогло или что стало триггером?"></textarea>
+      </div>
+      <p class="card-text mt" id="calendarMessage">Сегодня можно сделать один маленький шаг.</p>
+    </div>
+
+    <div class="panel reveal mt">
+      <h2 class="card-title">Последние 30 дней</h2>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+<script>
+  function render() {
+    SanaApp.renderMiniCalendar('#calendarGrid', 30);
+  }
+  document.querySelectorAll('[data-status]').forEach(button => {
+    button.addEventListener('click', () => {
+      const note = document.getElementById('calendarNote').value.trim();
+      SanaApp.saveCalendarEntry(button.dataset.status, note);
+      document.getElementById('calendarMessage').textContent = button.dataset.status === 'relapse'
+        ? 'Срыв — это информация. Ты не начинаешь с нуля.'
+        : 'Отметка сохранена. Ты продолжаешь путь.';
+      render();
+    });
+  });
+  render();
+</script>
+</body>
+</html>

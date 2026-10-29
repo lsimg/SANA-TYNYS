@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanaTynys — Sana Coach</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="soft-page">
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section>
+    <div class="center">
+      <div class="section-label" style="justify-content:center;">Sana Coach</div>
+      <h1 class="section-title">Мягкий разговор в момент тяги</h1>
+      <p class="section-desc" style="margin:0 auto;">Sana Coach не врач и не психолог. Он помогает заметить эмоцию, ситуацию, тело и один следующий шаг.</p>
+    </div>
+
+    <div class="coach-card">
+      <div class="coach-messages" id="coachMessages" aria-live="polite"></div>
+      <div class="choice-grid">
+        <button class="choice-btn" data-quick="Хочу курить сейчас">Хочу курить сейчас</button>
+        <button class="choice-btn" data-quick="Я сорвался(-ась)">Я сорвался(-ась)</button>
+        <button class="choice-btn" data-quick="Все друзья курят">Все друзья курят</button>
+        <button class="choice-btn" data-quick="Курю из-за стресса">Курю из-за стресса</button>
+        <button class="choice-btn" data-quick="Хочу отказаться от вейпа">Хочу отказаться от вейпа</button>
+      </div>
+      <div class="coach-input-row">
+        <textarea class="coach-input" id="coachInput" rows="2" placeholder="Напиши Sana Coach..."></textarea>
+        <button class="coach-send-btn" id="coachSendBtn">Отправить</button>
+      </div>
+      <div class="actions-row mt">
+        <button class="mini-btn" id="clearChat">Очистить историю</button>
+        <button class="mini-btn mint" data-download-journal>Скачать мой дневник</button>
+      </div>
+      <p class="card-text mt">Sana Coach не заменяет врача, психолога или экстренную помощь. При опасном состоянии обратись к близкому человеку, врачу или экстренным службам.</p>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+<script>
+  let chat = SanaApp.getStorage(SanaApp.SANA_KEYS.chat, []);
+  const messagesEl = document.getElementById('coachMessages');
+  const inputEl = document.getElementById('coachInput');
+  const sendBtn = document.getElementById('coachSendBtn');
+
+  function addMessage(role, content, extra = '') {
+    const div = document.createElement('div');
+    div.className = `coach-message ${role}${extra ? ` ${extra}` : ''}`;
+    div.innerHTML = SanaApp.formatCoachMessage(content);
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function renderChat() {
+    messagesEl.innerHTML = '';
+    if (!chat.length) {
+      addMessage('assistant', 'Привет. Я Sana Coach. Напиши, что сейчас происходит. Мы разберём это спокойно, без стыда и давления.');
+      return;
+    }
+    chat.forEach(item => addMessage(item.role === 'user' ? 'user' : 'assistant', item.content));
+  }
+
+  async function sendMessage(text) {
+    const message = text.trim();
+    if (!message) return;
+    chat.push({ role: 'user', content: message });
+    SanaApp.setStorage(SanaApp.SANA_KEYS.chat, chat.slice(-100));
+    addMessage('user', message);
+    inputEl.value = '';
+    sendBtn.disabled = true;
+    const loading = addMessage('assistant', 'Sana Coach думает...', 'loading');
+    const answer = await SanaApp.callSanaCoachAPI(chat);
+    loading.className = 'coach-message assistant';
+    loading.innerHTML = SanaApp.formatCoachMessage(answer);
+    chat.push({ role: 'model', content: answer });
+    SanaApp.setStorage(SanaApp.SANA_KEYS.chat, chat.slice(-100));
+    sendBtn.disabled = false;
+  }
+
+  sendBtn.addEventListener('click', () => sendMessage(inputEl.value));
+  inputEl.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage(inputEl.value);
+    }
+  });
+  document.querySelectorAll('[data-quick]').forEach(button => button.addEventListener('click', () => sendMessage(button.dataset.quick)));
+  document.getElementById('clearChat').addEventListener('click', () => {
+    if (!confirm('Очистить историю Sana Coach?')) return;
+    chat = [];
+    SanaApp.setStorage(SanaApp.SANA_KEYS.chat, []);
+    renderChat();
+  });
+  renderChat();
+</script>
+</body>
+</html>

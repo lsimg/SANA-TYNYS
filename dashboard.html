@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanaTynys — Мой путь</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section>
+    <div class="section-label">Мой путь</div>
+    <h1 class="section-title">Сегодня можно сделать один маленький шаг</h1>
+    <p class="section-desc">Dashboard показывает только то, что помогает прямо сейчас: прогресс, состояние, календарь и быстрый доступ к поддержке.</p>
+
+    <div class="dashboard-grid">
+      <div class="dashboard-card reveal"><div class="stat-value" id="daysValue">0</div><div class="stat-label">дней без никотина</div></div>
+      <div class="dashboard-card reveal"><div class="stat-value" id="moneyValue">₸0</div><div class="stat-label">сэкономлено</div></div>
+      <div class="dashboard-card reveal"><div class="stat-value" id="avoidedValue">0</div><div class="stat-label" id="avoidedLabel">не использовано</div></div>
+      <div class="dashboard-card reveal">
+        <div class="stat-value" id="bodyValue">Начало</div>
+        <div class="stat-label">статус тела</div>
+        <p class="card-text mt">Посмотри, что происходит с телом на твоём этапе.</p>
+        <a class="mini-btn mint mt" href="health.html">Открыть карту тела</a>
+      </div>
+    </div>
+
+    <div class="two-col mt">
+      <div class="panel reveal">
+        <h2 class="card-title">Сегодняшний маленький шаг</h2>
+        <p class="card-text" id="dailyTask">Выпей воды и отметь своё состояние. Один спокойный шаг уже считается.</p>
+        <div class="choice-grid">
+          <button class="checkin-btn" data-state="Спокойно">😌 Спокойно</button>
+          <button class="checkin-btn" data-state="Тянет курить">😣 Тянет курить</button>
+          <button class="checkin-btn" data-state="Срыв — это данные">😔 Был срыв</button>
+          <button class="checkin-btn" data-state="Хочу выговориться">💬 Хочу выговориться</button>
+        </div>
+      </div>
+      <div class="panel reveal">
+        <h2 class="card-title">Быстрый доступ</h2>
+        <p class="card-text">Когда тяга сильная, не нужно решать всё сразу.</p>
+        <div class="actions-row mt">
+          <a href="coach.html" class="btn-primary">Открыть чат</a>
+          <a href="exercises.html" class="btn-outline">Открыть упражнения</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col mt">
+      <div class="panel reveal">
+        <h2 class="card-title">Мини-календарь</h2>
+        <div class="calendar-grid" id="miniCalendar"></div>
+        <a href="calendar.html" class="mini-btn mint mt">Открыть календарь</a>
+      </div>
+      <div class="panel reveal">
+        <h2 class="card-title">Sana Coach</h2>
+        <p class="card-text">Можно написать в момент тяги, после срыва или когда просто хочется выговориться.</p>
+        <a href="coach.html" class="btn-primary mt">Открыть Sana Coach →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+<script>
+  SanaApp.renderProgressCards();
+  SanaApp.renderMiniCalendar('#miniCalendar', 14);
+  document.querySelectorAll('.checkin-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      SanaApp.saveCheckin(button.dataset.state);
+      document.getElementById('dailyTask').textContent = button.dataset.state.includes('Тянет')
+        ? 'Попробуй 2 минуты: вода, медленный выдох и один шаг в сторону от триггера.'
+        : 'Отметка сохранена. Ты продолжаешь путь.';
+    });
+  });
+</script>
+</body>
+</html>

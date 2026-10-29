@@ -1,0 +1,11 @@
+# Локальные ключи и переменные окружения
+.local-api-keys.json
+.env
+.env.*
+!.env.example
+
+# Временные файлы системы и редактора
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.log

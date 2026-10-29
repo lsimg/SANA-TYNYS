@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanaTynys — Мягкое начало</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="soft-page">
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section>
+    <div class="center">
+      <div class="section-label" style="justify-content:center;">Мягкое начало</div>
+      <h1 class="section-title">Давай просто посмотрим, что происходит</h1>
+      <p class="section-desc" style="margin:0 auto;">Никаких тестов на силу воли. Только несколько выборов, чтобы SanaTynys подстроился под тебя.</p>
+    </div>
+
+    <div class="card step-card active reveal" data-step="0">
+      <div class="step-count">Шаг 1 из 5</div>
+      <h2 class="card-title">Что ты хочешь изменить?</h2>
+      <div class="choice-grid" data-field="habitType">
+        <button class="choice-btn" data-value="cigarettes">Сигареты</button>
+        <button class="choice-btn" data-value="vape">Вейп</button>
+        <button class="choice-btn" data-value="both">Сигареты и вейп</button>
+        <button class="choice-btn" data-value="observe">Пока хочу просто понять привычку</button>
+      </div>
+    </div>
+
+    <div class="card step-card reveal" data-step="1">
+      <div class="step-count">Шаг 2 из 5</div>
+      <h2 class="card-title">Когда чаще всего тянет?</h2>
+      <div class="choice-grid" data-field="triggers" data-multi="true">
+        <button class="choice-btn" data-value="стресс">Стресс</button>
+        <button class="choice-btn" data-value="скука">Скука</button>
+        <button class="choice-btn" data-value="компания">Компания</button>
+        <button class="choice-btn" data-value="после еды">После еды</button>
+        <button class="choice-btn" data-value="кофе">Кофе</button>
+        <button class="choice-btn" data-value="тревога">Тревога</button>
+        <button class="choice-btn" data-value="перед сном">Перед сном</button>
+        <button class="choice-btn" data-value="маршрут">Привычный маршрут</button>
+        <button class="choice-btn" data-value="другое">Другое</button>
+      </div>
+    </div>
+
+    <div class="card step-card reveal" data-step="2">
+      <div class="step-count">Шаг 3 из 5</div>
+      <h2 class="card-title">Какой у тебя паттерн?</h2>
+      <div class="choice-grid" data-field="pattern">
+        <button class="choice-btn" data-value="automatic">Курю автоматически</button>
+        <button class="choice-btn" data-value="emotional">Курю из-за эмоций</button>
+        <button class="choice-btn" data-value="social">Курю социально</button>
+        <button class="choice-btn" data-value="tired">Курю, когда устаю</button>
+        <button class="choice-btn" data-value="unknown">Не знаю</button>
+      </div>
+    </div>
+
+    <div class="card step-card reveal" data-step="3">
+      <div class="step-count">Шаг 4 из 5</div>
+      <h2 class="card-title">Какой режим тебе ближе?</h2>
+      <div class="choice-grid" data-field="mode">
+        <button class="choice-btn" data-value="quit_now">Бросить сразу</button>
+        <button class="choice-btn" data-value="reduce">Снижать постепенно</button>
+        <button class="choice-btn" data-value="observe_7">Наблюдать привычку 7 дней</button>
+      </div>
+    </div>
+
+    <div class="card step-card reveal" data-step="4">
+      <div class="step-count">Шаг 5 из 5</div>
+      <h2 class="card-title">Настройки расчёта</h2>
+      <div class="form-grid">
+        <div class="field-group"><label>Дата начала</label><input id="startDate" type="date"></div>
+        <div class="field-group"><label>Сигарет в день</label><input id="cigarettesPerDay" type="number" min="0" value="10"></div>
+        <div class="field-group"><label>Цена пачки, ₸</label><input id="packPrice" type="number" min="0" value="900"></div>
+        <div class="field-group"><label>Сигарет в пачке</label><input id="cigarettesPerPack" type="number" min="1" value="20"></div>
+        <div class="field-group"><label>Траты на вейп в неделю, ₸</label><input id="vapeWeeklyCost" type="number" min="0" value="3000"></div>
+        <div class="field-group"><label>Эпизодов вейпа в день</label><input id="vapeEpisodesPerDay" type="number" min="0" value="8"></div>
+      </div>
+    </div>
+
+    <div class="actions-row" style="justify-content:center;margin-top:1.5rem;">
+      <button class="btn-outline" id="prevStep">Назад</button>
+      <button class="btn-primary" id="nextStep">Дальше</button>
+      <button class="mini-btn" id="skipOnboarding">Пропустить и настроить позже</button>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+<script>
+  const profile = { triggers: [] };
+  let step = 0;
+  const cards = [...document.querySelectorAll('.step-card')];
+  document.getElementById('startDate').value = SanaApp.getQuitSettings().startDate || new Date().toISOString().slice(0,10);
+
+  function showStep() {
+    cards.forEach((card, index) => card.classList.toggle('active', index === step));
+    document.getElementById('prevStep').style.display = step === 0 ? 'none' : 'inline-flex';
+    document.getElementById('nextStep').textContent = step === cards.length - 1 ? 'Завершить' : 'Дальше';
+  }
+
+  document.querySelectorAll('.choice-grid').forEach(group => {
+    group.addEventListener('click', (event) => {
+      const btn = event.target.closest('.choice-btn');
+      if (!btn) return;
+      const field = group.dataset.field;
+      if (group.dataset.multi) {
+        btn.classList.toggle('selected');
+        profile[field] = [...group.querySelectorAll('.selected')].map(item => item.dataset.value);
+      } else {
+        group.querySelectorAll('.choice-btn').forEach(item => item.classList.remove('selected'));
+        btn.classList.add('selected');
+        profile[field] = btn.dataset.value;
+      }
+    });
+  });
+
+  function finish(skip = false) {
+    const settings = {
+      ...SanaApp.getQuitSettings(),
+      habitType: profile.habitType || 'observe',
+      startDate: document.getElementById('startDate').value || new Date().toISOString().slice(0,10),
+      cigarettesPerDay: Number(document.getElementById('cigarettesPerDay').value) || 0,
+      packPrice: Number(document.getElementById('packPrice').value) || 0,
+      cigarettesPerPack: Number(document.getElementById('cigarettesPerPack').value) || 20,
+      vapeWeeklyCost: Number(document.getElementById('vapeWeeklyCost').value) || 0,
+      vapeEpisodesPerDay: Number(document.getElementById('vapeEpisodesPerDay').value) || 0
+    };
+    SanaApp.setStorage(SanaApp.SANA_KEYS.profile, { ...profile, skipped: skip, updatedAt: new Date().toISOString() });
+    SanaApp.setStorage(SanaApp.SANA_KEYS.settings, settings);
+    SanaApp.setStorage(SanaApp.SANA_KEYS.onboarding, true);
+    location.href = 'dashboard.html';
+  }
+
+  document.getElementById('nextStep').addEventListener('click', () => step < cards.length - 1 ? (step += 1, showStep()) : finish(false));
+  document.getElementById('prevStep').addEventListener('click', () => { step = Math.max(0, step - 1); showStep(); });
+  document.getElementById('skipOnboarding').addEventListener('click', () => finish(true));
+  showStep();
+</script>
+</body>
+</html>

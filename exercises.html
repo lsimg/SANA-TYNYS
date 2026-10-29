@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SanaTynys — Упражнения при тяге</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="soft-page">
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section>
+    <div class="section-label">Упражнения</div>
+    <h1 class="section-title">Упражнения при тяге</h1>
+    <p class="section-desc">Когда тяга сильная, не нужно побеждать её силой. Можно переждать волну, переключить тело и понять, что именно сработало.</p>
+    <div class="exercise-grid" id="exerciseGrid"></div>
+  </section>
+</main>
+
+<div class="modal" id="exerciseModal">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <h2 class="card-title" id="modalTitle">Упражнение</h2>
+      <button class="close-btn" id="closeModal">Закрыть</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const exercises = [
+    { id: 'breath-orb', icon: '🫁', title: 'Дыхательный пузырь', desc: '4 цикла: вдох, задержка, выдох.' },
+    { id: 'craving-90', icon: '🌊', title: '90 секунд тяги', desc: 'Тяга — это волна, а не приказ.' },
+    { id: 'name-trigger', icon: '🔍', title: 'Назови триггер', desc: 'Заметь паттерн без стыда.' },
+    { id: 'hands-busy', icon: '✍️', title: 'Руки заняты', desc: '2 минуты переключения тела.' },
+    { id: 'cold-water', icon: '💧', title: 'Холодная вода', desc: 'Вода или прохладные руки.' },
+    { id: 'grounding', icon: '🧭', title: '5-4-3-2-1 grounding', desc: 'Вернуться в текущий момент.' },
+    { id: 'letter-craving', icon: '💌', title: 'Письмо тяге', desc: 'Ответить тяге спокойно.' },
+    { id: 'refusal-script', icon: '💬', title: 'Сценарий отказа', desc: 'Фраза для компании.' },
+    { id: 'mini-walk', icon: '🚶', title: 'Мини-прогулка', desc: '3 минуты и 10 медленных шагов.' },
+    { id: 'relapse-review', icon: '🌿', title: 'Разбор срыва без стыда', desc: 'Ты не начинаешь с нуля.' }
+  ];
+  const grid = document.getElementById('exerciseGrid');
+  const modal = document.getElementById('exerciseModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+
+  exercises.forEach(ex => {
+    const card = document.createElement('button');
+    card.className = 'exercise-card reveal';
+    card.type = 'button';
+    card.innerHTML = `<div class="feature-icon">${ex.icon}</div><div class="feature-title">${ex.title}</div><p class="feature-desc">${ex.desc}</p>`;
+    card.addEventListener('click', () => openExercise(ex.id));
+    grid.appendChild(card);
+  });
+
+  function openExercise(id) {
+    const ex = exercises.find(item => item.id === id);
+    modalTitle.textContent = ex.title;
+    modalBody.innerHTML = renderExercise(id);
+    modal.classList.add('open');
+    bindExercise(id);
+  }
+
+  function finishExercise(type, result = {}) {
+    SanaApp.saveExerciseResult(type, result);
+    modalBody.insertAdjacentHTML('beforeend', '<p class="card-text mt"><strong>Сохранено.</strong> Один маленький шаг уже считается.</p>');
+  }
+
+  function renderExercise(id) {
+    if (id === 'breath-orb') return '<div class="big-orb"></div><h3 class="center section-title" id="breathPhase">Готов(а)?</h3><p class="center card-text" id="breathTimer">4 цикла: вдох 4 · задержка 7 · выдох 8.</p><div class="actions-row" style="justify-content:center;"><button class="btn-primary" data-start-breath>Начать</button><button class="mini-btn" data-pause-timer>Пауза</button><button class="mini-btn mint" data-finish>Завершить</button></div>';
+    if (id === 'craving-90') return '<div class="craving-wave"></div><h3 class="center section-title" id="timer">90</h3><p class="center card-text">Тяга — это волна, а не приказ.</p><div class="choice-grid"><button class="choice-btn" data-result="да">Стало слабее</button><button class="choice-btn" data-result="немного">Немного</button><button class="choice-btn" data-result="нет">Пока нет</button></div>';
+    if (id === 'name-trigger') return choiceHtml(['стресс','скука','компания','кофе','после еды','тревога','злость','одиночество','маршрут','не знаю'], 'trigger');
+    if (id === 'hands-busy') return '<h3 class="center section-title" id="handsTimer">120</h3><p class="card-text">Выбери действие на 2 минуты.</p>' + choiceHtml(['сжать антистресс','покрутить ручку','нарисовать линию','выпить воды','сложить бумагу','написать одно слово'], 'hands');
+    if (id === 'cold-water') return '<div class="craving-wave"></div><p class="card-text">Выпей воду или умой руки прохладной водой. Заметь тело.</p><div class="choice-grid"><button class="choice-btn" data-result="стало легче">Стало легче</button><button class="choice-btn" data-result="без изменений">Без изменений</button></div>';
+    if (id === 'grounding') return '<div class="feature-grid">' + ['5 вещей, которые вижу','4 звука, которые слышу','3 ощущения в теле','2 запаха','1 фраза поддержки себе'].map(t => `<div class="card"><div class="card-title">${t}</div><textarea placeholder="Запиши коротко..."></textarea></div>`).join('') + '</div><button class="btn-primary mt" data-finish>Сохранить</button>';
+    if (id === 'letter-craving') return '<div class="field-group"><label>Если бы тяга говорила, что бы она сказала?</label><textarea id="cravingSays"></textarea></div><div class="field-group mt"><label>Что ты можешь ответить ей спокойно?</label><textarea id="cravingAnswer"></textarea></div><button class="btn-primary mt" data-finish>Сохранить письмо</button>';
+    if (id === 'refusal-script') return choiceHtml(['Не сегодня, я проверяю себя','Я сейчас без никотина','Я выйду с вами, но курить не буду','Мне важно продержаться сегодня','Свой ответ'], 'refusal');
+    if (id === 'mini-walk') return '<div class="progress-ring"></div><h3 class="center section-title" id="walkTimer">180</h3><p class="center card-text">Встань, пройдись, почувствуй стопы, сделай 10 медленных шагов.</p><div class="field-group"><label>Оцени тягу от 1 до 10 после прогулки</label><input type="number" min="1" max="10" id="walkCraving"></div><button class="btn-primary mt" data-finish>Завершить</button>';
+    return '<div class="form-grid"><div class="field-group"><label>Где произошло?</label><input id="relapseWhere"></div><div class="field-group"><label>С кем?</label><input id="relapseWith"></div><div class="field-group"><label>Какая эмоция была до?</label><input id="relapseEmotion"></div><div class="field-group"><label>Что попробовать в следующий раз?</label><input id="relapseNext"></div></div><p class="card-text mt">Ты не начинаешь с нуля. Теперь у тебя есть данные.</p><div class="actions-row mt"><button class="btn-primary" data-finish>Сохранить разбор</button><a class="btn-outline" href="coach.html">Обсудить с Sana Coach</a></div>';
+  }
+
+  function choiceHtml(items, kind) {
+    return `<div class="choice-grid">${items.map(item => `<button class="choice-btn" data-kind="${kind}" data-result="${item}">${item}</button>`).join('')}</div><p class="card-text mt">Это не про силу воли. Это паттерн, который мы заметили.</p>`;
+  }
+
+  function bindExercise(id) {
+    let countdown;
+    const startCountdown = (elementId, seconds, doneText) => {
+      clearInterval(countdown);
+      let left = seconds;
+      const el = document.getElementById(elementId);
+      if (el) el.textContent = left;
+      countdown = setInterval(() => {
+        left -= 1;
+        if (el) el.textContent = left > 0 ? left : doneText;
+        if (left <= 0) {
+          clearInterval(countdown);
+          finishExercise(id, { completed: true, timer: seconds });
+        }
+      }, 1000);
+    };
+    if (id === 'breath-orb') {
+      const phases = [
+        ['Вдох', 4], ['Задержка', 7], ['Выдох', 8],
+        ['Вдох', 4], ['Задержка', 7], ['Выдох', 8],
+        ['Вдох', 4], ['Задержка', 7], ['Выдох', 8],
+        ['Вдох', 4], ['Задержка', 7], ['Выдох', 8]
+      ];
+      let phaseIndex = 0;
+      let phaseLeft = phases[0][1];
+      const runBreath = () => {
+        clearInterval(countdown);
+        countdown = setInterval(() => {
+          const phase = phases[phaseIndex];
+          document.getElementById('breathPhase').textContent = phase[0];
+          document.getElementById('breathTimer').textContent = `${phaseLeft} сек.`;
+          phaseLeft -= 1;
+          if (phaseLeft < 0) {
+            phaseIndex += 1;
+            if (phaseIndex >= phases.length) {
+              clearInterval(countdown);
+              document.getElementById('breathPhase').textContent = 'Готово';
+              finishExercise(id, { cycles: 4 });
+              return;
+            }
+            phaseLeft = phases[phaseIndex][1];
+          }
+        }, 1000);
+      };
+      modalBody.querySelector('[data-start-breath]')?.addEventListener('click', runBreath);
+      modalBody.querySelector('[data-pause-timer]')?.addEventListener('click', () => clearInterval(countdown));
+    }
+    if (id === 'craving-90') {
+      startCountdown('timer', 90, 'Готово');
+    }
+    if (id === 'hands-busy') {
+      startCountdown('handsTimer', 120, 'Готово');
+    }
+    if (id === 'mini-walk') {
+      startCountdown('walkTimer', 180, 'Готово');
+    }
+    modalBody.querySelectorAll('[data-result]').forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.dataset.kind === 'trigger') SanaApp.recordTrigger(button.dataset.result, 'exercise');
+        finishExercise(id, { value: button.dataset.result });
+      });
+    });
+    modalBody.querySelectorAll('[data-finish]').forEach(button => button.addEventListener('click', () => {
+      if (id === 'relapse-review') {
+        const reviews = SanaApp.getStorage(SanaApp.SANA_KEYS.relapses, []);
+        reviews.push({
+          where: document.getElementById('relapseWhere')?.value || '',
+          with: document.getElementById('relapseWith')?.value || '',
+          emotion: document.getElementById('relapseEmotion')?.value || '',
+          next: document.getElementById('relapseNext')?.value || '',
+          createdAt: new Date().toISOString()
+        });
+        SanaApp.setStorage(SanaApp.SANA_KEYS.relapses, reviews.slice(-80));
+      }
+      finishExercise(id, { completed: true });
+    }));
+  }
+
+  document.getElementById('closeModal').addEventListener('click', () => modal.classList.remove('open'));
+  modal.addEventListener('click', event => { if (event.target === modal) modal.classList.remove('open'); });
+</script>
+</body>
+</html>

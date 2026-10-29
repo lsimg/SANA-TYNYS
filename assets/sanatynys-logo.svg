@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 606 390" role="img" aria-labelledby="title desc">
+  <title id="title">SanaTynys</title>
+  <desc id="desc">SanaTynys logo with a heart, leaf and breathing wave.</desc>
+  <defs>
+    <radialGradient id="orb" cx="58%" cy="35%" r="38%">
+      <stop offset="0" stop-color="#d8f0e9"/>
+      <stop offset=".55" stop-color="#d8f0e9" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#d8f0e9" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mintStroke" x1="180" y1="74" x2="430" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#46b8c9"/>
+      <stop offset=".52" stop-color="#66c7aa"/>
+      <stop offset="1" stop-color="#a7d7cb"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="240" y1="185" x2="309" y2="238" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8be3cd"/>
+      <stop offset="1" stop-color="#259f78"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="198" y1="242" x2="447" y2="220" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#70d8c2"/>
+      <stop offset=".45" stop-color="#8ed9d2"/>
+      <stop offset="1" stop-color="#b8dfe7" stop-opacity=".25"/>
+    </linearGradient>
+  </defs>
+  <rect width="606" height="390" fill="#fffdf9"/>
+  <circle cx="338" cy="145" r="72" fill="url(#orb)"/>
+  <path d="M211 219c39 40 121 44 178 12 40-22 70-59 72-103" fill="none" stroke="#9bcfc5" stroke-width="2" opacity=".55"/>
+  <path d="M211 219c-10-72 28-133 88-147 64-15 128 24 146 87" fill="none" stroke="#8fc8bd" stroke-width="3"/>
+  <path d="M303 218c0-42 62-55 42-88-13-21-35 2-42 16-8-14-30-37-43-16-20 33 43 46 43 88Z" fill="none" stroke="url(#mintStroke)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M303 220c-16-11-35-14-48-25-10-9-14-20-14-20 27 2 48 8 56 29 3 8 5 14 6 16Z" fill="url(#leaf)" stroke="#56c8aa" stroke-width="2"/>
+  <path d="M300 222c-13 20-30 28-50 27" fill="none" stroke="#239775" stroke-width="7" stroke-linecap="round"/>
+  <path d="M305 222c22-26 55-31 86-24" fill="none" stroke="#66c1b6" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+  <path d="M192 262c54 13 92-18 137-34 46-17 84-2 115 18" fill="none" stroke="url(#wave)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M218 273c48 4 80-20 116-35 41-17 81-9 115 13" fill="none" stroke="#8ccfd3" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+  <path d="M252 282c39-4 65-23 95-34 35-12 67-5 94 12" fill="none" stroke="#4eb7cf" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+  <g fill="#9ed8d3" opacity=".9">
+    <circle cx="401" cy="170" r="1.2"/>
+    <circle cx="413" cy="168" r="1.2"/>
+    <circle cx="425" cy="169" r="1.2"/>
+    <circle cx="437" cy="172" r="1.2"/>
+    <circle cx="390" cy="177" r="1.2"/>
+    <circle cx="379" cy="186" r="1.2"/>
+    <circle cx="367" cy="196" r="1.2"/>
+  </g>
+  <text x="303" y="313" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="92" fill="#08245c">SanaTynys</text>
+  <line x1="76" y1="342" x2="107" y2="342" stroke="#8bcac3" stroke-width="1.2"/>
+  <circle cx="116" cy="342" r="2.3" fill="#76c4bd"/>
+  <text x="303" y="347" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" letter-spacing="6" fill="#78beb8">ОСОЗНАННЫЙ ПУТЬ К СВОБОДНОМУ ДЫХАНИЮ</text>
+  <circle cx="490" cy="342" r="2.3" fill="#76c4bd"/>
+  <line x1="499" y1="342" x2="530" y2="342" stroke="#8bcac3" stroke-width="1.2"/>
+</svg>

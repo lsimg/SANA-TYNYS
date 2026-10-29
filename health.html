@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SanaTynys — Здоровье</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav id="navbar">
+  <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+  <button class="nav-toggle" type="button">Меню</button>
+  <ul class="nav-links">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="dashboard.html">Мой путь</a></li>
+    <li><a href="calendar.html">Календарь</a></li>
+    <li><a href="exercises.html">Упражнения</a></li>
+    <li><a href="health.html" class="active">Здоровье</a></li>
+    <li><a href="coach.html">Sana Coach</a></li>
+  </ul>
+</nav>
+
+<main class="page-shell">
+  <section class="soft-page">
+    <div class="section-label">Здоровье</div>
+    <h1 class="section-title">Что происходит с телом</h1>
+    <p class="section-desc">
+      Курение и отказ от никотина — это не только сила воли. SanaTynys показывает, что происходит с сердцем,
+      лёгкими, мозгом, кровью, сном и тягой простым языком.
+    </p>
+
+    <div class="health-tabs" aria-label="Фильтры карты здоровья">
+      <button class="health-tab active" type="button" data-health-tab="smoking">Во время курения</button>
+      <button class="health-tab" type="button" data-health-tab="first-hours">Первые 72 часа</button>
+      <button class="health-tab" type="button" data-health-tab="weeks-months">Недели и месяцы</button>
+      <button class="health-tab" type="button" data-health-tab="long-term">Долгий срок</button>
+    </div>
+
+    <div class="current-stage-card reveal" id="currentStageCard">
+      <div class="current-stage-layout">
+        <div>
+          <div class="stage-time">Твой текущий этап</div>
+          <div class="current-days" id="currentDays">0</div>
+          <div class="current-days-label">дней без никотина</div>
+        </div>
+        <div>
+          <h2 class="card-title" id="currentStageTitle">Сейчас</h2>
+          <p class="card-text" id="currentStageBody">Тело уже реагирует на паузу без никотина.</p>
+          <p class="card-text mt" id="currentStageFeeling">Тяга может приходить волнами.</p>
+          <div class="stage-support" id="currentStageSupport">Один маленький шаг сейчас важнее идеального плана.</div>
+          <a class="mini-btn mint mt" href="exercises.html">Что поможет сейчас?</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="health-panel active" data-health-panel="smoking">
+      <div class="section-label">Во время курения</div>
+      <h2 class="section-title">Что поддерживает цикл привычки</h2>
+      <p class="section-desc">Цель этого блока — не напугать, а спокойно показать, почему никотин так быстро закрепляется как ритуал.</p>
+
+      <div class="health-grid mt">
+        <article class="health-card reveal">
+          <h3>Мозг</h3>
+          <p>Никотин быстро попадает в мозг и создаёт короткое ощущение облегчения. Поэтому человеку кажется, что сигарета или вейп помогают от стресса. На самом деле мозг запоминает цикл: стресс → никотин → краткое облегчение → новая тяга.</p>
+        </article>
+        <article class="health-card reveal">
+          <h3>Сердце</h3>
+          <p>Никотин стимулирует нервную систему. Пульс и давление могут повышаться, а сердцу приходится работать активнее.</p>
+        </article>
+        <article class="health-card reveal">
+          <h3>Кровь и кислород</h3>
+          <p>При курении в кровь попадает угарный газ. Он мешает крови нормально переносить кислород, поэтому мозг, сердце и мышцы получают меньше кислорода.</p>
+        </article>
+        <article class="health-card reveal">
+          <h3>Лёгкие</h3>
+          <p>Дым раздражает бронхи и мешает дыхательным путям очищаться. Из-за этого могут появляться кашель, мокрота, одышка и тяжесть при нагрузке.</p>
+        </article>
+        <article class="health-card reveal">
+          <h3>Кожа и запах</h3>
+          <p>Курение влияет на запах изо рта, запах одежды, кожу, зубы и дёсны. Эти изменения часто заметны быстрее, чем кажется.</p>
+        </article>
+        <div class="habit-cycle reveal">
+          <h3 class="card-title">Цикл привычки</h3>
+          <p class="card-text">Когда цикл становится видимым, его легче мягко изменить.</p>
+          <div class="cycle-row" aria-label="Триггер Никотин Краткое облегчение Спад Новая тяга">
+            <div class="cycle-node">Триггер</div>
+            <div class="cycle-node">Никотин</div>
+            <div class="cycle-node">Краткое облегчение</div>
+            <div class="cycle-node">Спад</div>
+            <div class="cycle-node">Новая тяга</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="health-panel" data-health-panel="first-hours">
+      <div class="section-label">Первые 72 часа</div>
+      <h2 class="section-title">Первые изменения</h2>
+      <p class="section-desc">В это время тяга может быть заметной, но тело уже начинает перестраиваться.</p>
+      <div class="health-grid mt" id="firstHoursGrid"></div>
+    </div>
+
+    <div class="health-panel" data-health-panel="weeks-months">
+      <div class="section-label">Недели и месяцы</div>
+      <h2 class="section-title">Новые ритуалы и восстановление</h2>
+      <p class="section-desc">Появляется больше пространства между триггером и действием. Это помогает выбирать реакцию осознаннее.</p>
+      <div class="health-grid mt" id="weeksMonthsGrid"></div>
+    </div>
+
+    <div class="health-panel" data-health-panel="long-term">
+      <div class="section-label">Долгий срок</div>
+      <h2 class="section-title">Долгая поддержка тела</h2>
+      <p class="section-desc">Долгий путь состоит не из идеальных дней, а из множества спокойных решений в пользу себя.</p>
+      <div class="health-grid mt" id="longTermGrid"></div>
+    </div>
+  </section>
+
+  <section class="soft-page">
+    <div class="section-label">Симптомы</div>
+    <h2 class="section-title">Что может быть неприятным, но нормально</h2>
+    <p class="section-desc">
+      Это не значит, что ты слабый/слабая. Это значит, что тело и мозг перестраиваются.
+    </p>
+    <div class="symptom-grid mt" id="withdrawalGrid"></div>
+    <div class="health-warning">
+      Если появляется сильная боль в груди, тяжёлая одышка, обморок, кровь при кашле или состояние кажется опасным — лучше обратиться к врачу или экстренной помощи.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="logo" href="index.html" aria-label="SanaTynys"><img src="assets/sanatynys-logo.svg" alt="SanaTynys"></a>
+      <p>Осознанный путь к свободному дыханию. Без давления, стыда и перегруза.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Платформа</h4>
+      <a href="dashboard.html">Мой путь</a>
+      <a href="calendar.html">Календарь</a>
+      <a href="exercises.html">Упражнения</a>
+      <a href="health.html">Здоровье</a>
+    </div>
+    <div class="footer-col">
+      <h4>Поддержка</h4>
+      <a href="coach.html">Sana Coach</a>
+      <a href="onboarding.html">Настроить путь</a>
+      <a href="#" data-download-journal>Скачать дневник</a>
+    </div>
+    <div class="footer-col">
+      <h4>Данные</h4>
+      <a href="#" data-clear-data>Очистить данные</a>
+      <a href="#">Конфиденциальность</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 SanaTynys.</span>
+    <span>Сделано в Казахстане</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+  const WITHDRAWAL_SYMPTOMS = [
+    {
+      symptom: 'Сильная тяга',
+      why: 'Мозг ждёт знакомый быстрый сигнал облегчения и может напоминать о нём волнами.',
+      whatHelps: 'Пауза на 90 секунд, вода, дыхание 4-7-8 и фраза “сейчас я пережидаю волну”.'
+    },
+    {
+      symptom: 'Раздражительность',
+      why: 'Нервная система привыкает работать без регулярной никотиновой стимуляции.',
+      whatHelps: 'Снизить нагрузку, предупредить близких, сделать короткую прогулку или размять плечи.'
+    },
+    {
+      symptom: 'Тревожность',
+      why: 'Сигарета могла быть привычным способом быстро переключаться от тревоги.',
+      whatHelps: 'Grounding 5-4-3-2-1, медленный выдох и вопрос “что именно сейчас давит?”.'
+    },
+    {
+      symptom: 'Проблемы со сном',
+      why: 'Тело перестраивает ритмы без никотина, а вечерние ритуалы могут временно сбиться.',
+      whatHelps: 'Тёплый душ, меньше кофеина вечером, короткая запись мыслей перед сном.'
+    },
+    {
+      symptom: 'Повышенный аппетит',
+      why: 'Никотин влиял на аппетит и ритуалы. Руки и рот могут искать замену.',
+      whatHelps: 'Вода, орехи или фрукты под рукой, медленная еда и отдельная пауза после приёма пищи.'
+    },
+    {
+      symptom: 'Кашель',
+      why: 'Дыхательные пути могут активнее очищаться после снижения дыма и раздражения.',
+      whatHelps: 'Вода, влажный воздух, спокойная ходьба. При крови, сильной одышке или боли лучше обратиться к врачу.'
+    },
+    {
+      symptom: 'Сложно концентрироваться',
+      why: 'Мозг перестраивает внимание без коротких никотиновых “переключателей”.',
+      whatHelps: 'Работать блоками по 10–15 минут, делать короткие паузы и не требовать от себя максимума.'
+    },
+    {
+      symptom: 'Настроение скачет',
+      why: 'Дофаминовая система и привычные способы успокоения меняются не мгновенно.',
+      whatHelps: 'Сон, еда, движение, разговор с близким и мягкая отметка состояния в SanaTynys.'
+    }
+  ];
+
+  const exerciseMap = {
+    'first-hours': ['Дыхательный пузырь', '90 секунд тяги', 'Холодная вода', '5-4-3-2-1'],
+    'weeks-months': ['Мини-прогулка', 'Назови триггер', 'Письмо тяге', 'Сценарий отказа'],
+    'long-term': ['Мини-прогулка', 'Назови триггер', 'Письмо тяге', 'Сценарий отказа']
+  };
+
+  function renderCurrentStage() {
+    const progress = SanaApp.calculateProgress();
+    const stage = SanaApp.getBodyStage(progress.days);
+    document.getElementById('currentDays').textContent = progress.days;
+    document.getElementById('currentStageTitle').textContent = `${stage.time}: ${stage.title}`;
+    document.getElementById('currentStageBody').textContent = stage.body;
+    document.getElementById('currentStageFeeling').textContent = stage.feeling;
+    document.getElementById('currentStageSupport').textContent = stage.userText;
+  }
+
+  function renderStageCards(category, targetId) {
+    const current = SanaApp.getBodyStage(SanaApp.calculateProgress().days);
+    const target = document.getElementById(targetId);
+    const suggestions = exerciseMap[category] || exerciseMap['weeks-months'];
+    target.innerHTML = SanaApp.BODY_STAGES
+      .filter((stage) => stage.category === category)
+      .map((stage) => `
+        <article class="health-stage-card reveal ${stage.time === current.time ? 'active' : ''}">
+          <div class="stage-time">${stage.time}</div>
+          <h3>${stage.title}</h3>
+          <p>${stage.body}</p>
+          <p class="mt">${stage.feeling}</p>
+          <div class="exercise-suggestions">
+            ${suggestions.map((item) => `<span class="exercise-chip">${item}</span>`).join('')}
+          </div>
+          <a class="mini-btn mint" href="exercises.html">Что поможет сейчас?</a>
+        </article>
+      `)
+      .join('');
+  }
+
+  function renderWithdrawalSymptoms() {
+    const grid = document.getElementById('withdrawalGrid');
+    grid.innerHTML = WITHDRAWAL_SYMPTOMS.map((item) => `
+      <details class="symptom-card reveal">
+        <summary>${item.symptom}</summary>
+        <p class="mt"><strong>Почему так бывает:</strong> ${item.why}</p>
+        <p class="mt"><strong>Что может помочь:</strong> ${item.whatHelps}</p>
+      </details>
+    `).join('');
+  }
+
+  function initHealthTabs() {
+    document.querySelectorAll('[data-health-tab]').forEach((tab) => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-health-tab]').forEach((item) => item.classList.remove('active'));
+        document.querySelectorAll('[data-health-panel]').forEach((panel) => panel.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`[data-health-panel="${tab.dataset.healthTab}"]`)?.classList.add('active');
+      });
+    });
+  }
+
+  renderCurrentStage();
+  renderStageCards('first-hours', 'firstHoursGrid');
+  renderStageCards('weeks-months', 'weeksMonthsGrid');
+  renderStageCards('long-term', 'longTermGrid');
+  renderWithdrawalSymptoms();
+  initHealthTabs();
+</script>
+</body>
+</html>

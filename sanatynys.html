@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SanaTynys — Осознанный путь к свободному дыханию</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2a4a;
+    --navy-mid: #1a3d66;
+    --mint: #3ecfaf;
+    --mint-light: #6edfc8;
+    --mint-pale: #e6f9f5;
+    --sage: #5aa888;
+    --cream: #f7f4ef;
+    --warm-white: #fdfcfa;
+    --text-dark: #0f1f2e;
+    --text-mid: #3a5068;
+    --text-light: #7a96ae;
+    --border: rgba(15,42,74,0.1);
+    --shadow-soft: 0 8px 40px rgba(15,42,74,0.08);
+    --shadow-card: 0 2px 20px rgba(15,42,74,0.07);
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5%;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(253,252,250,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+
+  nav.scrolled { box-shadow: var(--shadow-soft); }
+
+  .logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .logo img {
+    display: block;
+    width: auto;
+    height: 52px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.15rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-size: 0.84rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+
+  .nav-cta {
+    background: var(--navy);
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    font-weight: 500 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--navy-mid) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 5% 80px;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 65% 40%, rgba(62,207,175,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 10% 80%, rgba(15,42,74,0.06) 0%, transparent 50%),
+      var(--cream);
+    z-index: 0;
+  }
+
+  /* animated breath circle */
+  .breath-orb {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, rgba(62,207,175,0.22), rgba(15,42,74,0.08) 60%, transparent 80%);
+    animation: breathe 5s ease-in-out infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translateY(-50%) scale(1); opacity: 0.7; }
+    50% { transform: translateY(-50%) scale(1.08); opacity: 1; }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(62,207,175,0.12);
+    border: 1px solid rgba(62,207,175,0.3);
+    color: var(--sage);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 30px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before { content: '◆'; font-size: 0.5rem; }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 1.4rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--mint);
+  }
+
+  .hero-sub {
+    font-size: 1.08rem;
+    color: var(--text-mid);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 2.2rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: 0 4px 20px rgba(15,42,74,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(15,42,74,0.32); background: var(--navy-mid); }
+
+  .btn-outline {
+    border: 1.5px solid var(--border);
+    color: var(--text-mid);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    background: transparent;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-outline:hover { border-color: var(--mint); color: var(--navy); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+
+  /* Dashboard Card Preview */
+  .dashboard-preview {
+    background: white;
+    border-radius: 24px;
+    padding: 1.8rem;
+    box-shadow: 0 30px 80px rgba(15,42,74,0.15), 0 0 0 1px rgba(15,42,74,0.06);
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+  }
+
+  .dashboard-preview::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 30px; right: 30px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mint), var(--sage));
+    border-radius: 3px;
+  }
+
+  .dp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.4rem;
+  }
+
+  .dp-greeting {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 500;
+  }
+  .dp-day {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem;
+    color: var(--navy);
+    margin-top: 0.1rem;
+  }
+
+  .dp-streak {
+    background: rgba(62,207,175,0.12);
+    border: 1px solid rgba(62,207,175,0.25);
+    border-radius: 12px;
+    padding: 0.4rem 0.8rem;
+    text-align: center;
+  }
+  .dp-streak-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    color: var(--mint);
+    line-height: 1;
+  }
+  .dp-streak-label { font-size: 0.65rem; color: var(--text-light); font-weight: 500; }
+
+  .dp-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .dp-stat {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 0.9rem 0.7rem;
+    text-align: center;
+  }
+  .dp-stat-val {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.4rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .dp-stat-label { font-size: 0.65rem; color: var(--text-light); margin-top: 0.2rem; font-weight: 500; }
+
+  /* mini breath tracker */
+  .dp-breath {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 16px;
+    padding: 1.1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+  }
+
+  .breath-ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(62,207,175,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .breath-ring::after {
+    content: '';
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(62,207,175,0.2);
+    animation: pulseRing 3s ease-in-out infinite;
+  }
+  @keyframes pulseRing {
+    0%,100% { transform: scale(0.8); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+  }
+
+  .dp-breath-text { flex: 1; }
+  .dp-breath-title { font-size: 0.82rem; font-weight: 600; opacity: 0.95; }
+  .dp-breath-sub { font-size: 0.72rem; opacity: 0.6; margin-top: 0.15rem; }
+
+  .dp-breath-btn {
+    background: var(--mint);
+    color: var(--navy);
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    padding: 1.6rem 5%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text-light);
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+  .trust-item span { font-size: 1rem; }
+
+  /* ── SECTIONS ── */
+  section { padding: 90px 5%; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 0.9rem;
+  }
+  .section-label::before { content: '—'; opacity: 0.5; }
+
+  .section-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--text-mid);
+    font-size: 1rem;
+    max-width: 540px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how { background: var(--cream); }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+
+  .how-step {
+    background: white;
+    border-radius: var(--radius);
+    padding: 2rem 1.6rem;
+    position: relative;
+    border: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .how-step:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+
+  .step-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.8rem;
+    color: rgba(62,207,175,0.2);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+
+  .step-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: rgba(62,207,175,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── FEATURES ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+
+  .feature-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 2.2rem;
+    border: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mint), var(--sage));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); }
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-card.wide { grid-column: span 2; }
+
+  .feature-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(62,207,175,0.15), rgba(62,207,175,0.05));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .feature-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  .feature-desc {
+    font-size: 0.87rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* wide card inner layout */
+  .feature-card.wide .feature-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .coach-chat {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .chat-msg {
+    max-width: 85%;
+    padding: 0.7rem 1rem;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+  .chat-msg.bot {
+    background: var(--navy);
+    color: rgba(255,255,255,0.9);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+  }
+  .chat-msg.user {
+    background: white;
+    color: var(--text-mid);
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+    border: 1px solid var(--border);
+  }
+  .chat-sender {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.1rem;
+    opacity: 0.5;
+  }
+
+  /* ── TRIGGER TRACKER ── */
+  .tracker-section {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d3557 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .tracker-section::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: rgba(62,207,175,0.05);
+    pointer-events: none;
+  }
+
+  .tracker-section .section-label { color: var(--mint-light); }
+  .tracker-section .section-title { color: white; }
+  .tracker-section .section-desc { color: rgba(255,255,255,0.6); max-width: 500px; }
+
+  .tracker-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3.5rem;
+    align-items: center;
+  }
+
+  .trigger-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .trigger-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .trigger-item:hover { background: rgba(255,255,255,0.1); }
+
+  .trigger-emoji { font-size: 1.2rem; flex-shrink: 0; }
+  .trigger-name { font-size: 0.88rem; font-weight: 500; flex: 1; }
+  .trigger-bar-wrap { width: 90px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
+  .trigger-bar { height: 100%; background: var(--mint); border-radius: 3px; transition: width 1s ease; }
+  .trigger-pct { font-size: 0.75rem; color: var(--mint-light); font-weight: 600; min-width: 30px; text-align: right; }
+
+  .health-gains {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .gain-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.4rem;
+  }
+  .gain-time {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mint);
+    margin-bottom: 0.4rem;
+  }
+  .gain-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+  .gain-desc { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.5; font-weight: 300; }
+
+  /* ── COACH SECTION ── */
+  .coach-section {
+    background: white;
+    text-align: center;
+  }
+
+  .coach-card {
+    max-width: 680px;
+    margin: 3rem auto 0;
+    background: var(--cream);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .coach-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,207,175,0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .coach-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint) 0%, var(--navy) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 1.2rem;
+    box-shadow: 0 0 0 6px rgba(62,207,175,0.15);
+  }
+
+  .coach-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .coach-tagline {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .coach-abilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 1.8rem;
+  }
+
+  .ability-tag {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.78rem;
+    color: var(--text-mid);
+    font-weight: 500;
+  }
+
+  .coach-chat-live {
+    margin-top: 2rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1rem;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    box-shadow: var(--shadow-card);
+    min-width: 0;
+  }
+
+  .coach-messages {
+    min-height: 220px;
+    max-height: 360px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.2rem 0.4rem 0.8rem 0.2rem;
+    min-width: 0;
+  }
+
+  .coach-message {
+    max-width: min(92%, 620px);
+    min-width: 0;
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .coach-message.assistant {
+    align-self: flex-start;
+    background: var(--cream);
+    color: var(--text-mid);
+    border: 1px solid var(--border);
+    margin-right: 0.4rem;
+  }
+
+  .coach-message.user {
+    align-self: flex-end;
+    background: var(--navy);
+    color: white;
+    margin-left: 0.4rem;
+  }
+
+  .coach-message.error {
+    background: rgba(245,158,11,0.12);
+    border-color: rgba(245,158,11,0.28);
+    color: var(--text-mid);
+  }
+
+  .coach-message.loading {
+    color: var(--text-light);
+    font-style: italic;
+  }
+
+  .coach-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.7rem 0 1rem;
+  }
+
+  .coach-quick-btn {
+    background: var(--mint-pale);
+    color: var(--navy);
+    border: 1px solid rgba(62,207,175,0.25);
+    border-radius: 18px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .coach-quick-btn:hover { background: rgba(62,207,175,0.18); transform: translateY(-1px); }
+
+  .coach-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.7rem;
+  }
+
+  .coach-input {
+    width: 100%;
+    min-height: 48px;
+    max-height: 120px;
+    resize: vertical;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 0.8rem 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    background: var(--warm-white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .coach-input:focus {
+    border-color: rgba(62,207,175,0.7);
+    box-shadow: 0 0 0 3px rgba(62,207,175,0.12);
+  }
+
+  .coach-send-btn {
+    align-self: end;
+    min-height: 48px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 0 1.2rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .coach-send-btn:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .coach-send-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+  .coach-disclaimer {
+    margin-top: 0.85rem;
+    font-size: 0.74rem;
+    line-height: 1.55;
+    color: var(--text-light);
+    text-align: center;
+    font-weight: 300;
+  }
+
+  .progress-section { background: var(--warm-white); }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-top: 2.8rem;
+  }
+
+  .progress-card,
+  .settings-panel,
+  .calendar-panel,
+  .checkin-panel,
+  .body-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+  }
+
+  .progress-card {
+    padding: 1.4rem;
+    min-height: 132px;
+  }
+
+  .progress-label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+  }
+
+  .progress-value {
+    font-family: 'Instrument Serif', serif;
+    color: var(--navy);
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .progress-note {
+    color: var(--text-mid);
+    font-size: 0.8rem;
+    line-height: 1.55;
+    margin-top: 0.5rem;
+    font-weight: 300;
+  }
+
+  .settings-panel,
+  .calendar-panel,
+  .checkin-panel {
+    padding: 1.6rem;
+    margin-top: 1.4rem;
+  }
+
+  .settings-title,
+  .panel-title {
+    color: var(--navy);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.9rem;
+  }
+
+  .field-group label {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .field-group input,
+  .field-group select {
+    width: 100%;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.65rem 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--warm-white);
+    outline: none;
+  }
+
+  .field-group input:focus,
+  .field-group select:focus {
+    border-color: rgba(62,207,175,0.65);
+    box-shadow: 0 0 0 3px rgba(62,207,175,0.11);
+  }
+
+  .settings-actions,
+  .calendar-actions,
+  .coach-tools,
+  .checkin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .mini-btn {
+    border: 1px solid var(--border);
+    background: var(--cream);
+    color: var(--navy);
+    border-radius: 24px;
+    padding: 0.65rem 1rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s, border-color 0.2s;
+  }
+  .mini-btn:hover { transform: translateY(-1px); border-color: rgba(62,207,175,0.45); background: var(--mint-pale); }
+  .mini-btn.primary { background: var(--navy); color: white; border-color: var(--navy); }
+  .mini-btn.mint { background: var(--mint-pale); border-color: rgba(62,207,175,0.35); }
+  .mini-btn.rose { background: #fff1f2; border-color: rgba(244,63,94,0.16); color: #8a3245; }
+
+  .save-status {
+    color: var(--sage);
+    font-size: 0.8rem;
+    align-self: center;
+  }
+
+  .quick-checkin { background: var(--cream); }
+
+  .checkin-actions { margin-top: 2rem; }
+
+  .checkin-btn {
+    background: white;
+    color: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.15s, border-color 0.2s;
+  }
+  .checkin-btn:hover { transform: translateY(-2px); border-color: rgba(62,207,175,0.45); }
+
+  .calendar-section { background: var(--warm-white); }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0.55rem;
+    margin-top: 1.4rem;
+  }
+
+  .calendar-day {
+    min-height: 68px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--cream);
+    padding: 0.55rem;
+    color: var(--text-mid);
+    font-size: 0.75rem;
+  }
+
+  .calendar-day strong {
+    display: block;
+    color: var(--navy);
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .calendar-day.smoke_free { background: var(--mint-pale); border-color: rgba(62,207,175,0.35); }
+  .calendar-day.craving { background: #fff8e6; border-color: rgba(245,158,11,0.22); }
+  .calendar-day.relapse { background: #fff1f2; border-color: rgba(244,63,94,0.18); }
+
+  .calendar-feedback {
+    margin-top: 1rem;
+    color: var(--text-mid);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .body-map { background: var(--cream); }
+
+  .body-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 2.8rem;
+  }
+
+  .body-card {
+    padding: 1.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .body-card.active {
+    border-color: rgba(62,207,175,0.65);
+    box-shadow: 0 8px 34px rgba(62,207,175,0.16);
+  }
+
+  .body-time {
+    color: var(--mint);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .body-title {
+    color: var(--navy);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .body-text {
+    color: var(--text-mid);
+    font-size: 0.84rem;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ── FAQ ── */
+  .faq { background: var(--cream); }
+
+  .faq-list {
+    max-width: 700px;
+    margin: 3rem auto 0;
+  }
+
+  .faq-item {
+    background: white;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 0.8rem;
+    overflow: hidden;
+  }
+
+  .faq-q {
+    padding: 1.2rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .faq-q:hover { background: var(--cream); }
+
+  .faq-arrow {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    transition: transform 0.3s, background 0.2s;
+    flex-shrink: 0;
+    color: var(--mint);
+    font-weight: 700;
+  }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); background: rgba(62,207,175,0.15); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.87rem;
+    color: var(--text-mid);
+    line-height: 1.75;
+    font-weight: 300;
+    padding: 0 1.5rem;
+  }
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding: 0 1.5rem 1.2rem;
+  }
+
+  /* ── CTA ── */
+  .final-cta {
+    background: linear-gradient(135deg, var(--navy) 0%, #0d3557 100%);
+    text-align: center;
+    padding: 100px 5%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,207,175,0.1), transparent 60%);
+    pointer-events: none;
+  }
+
+  .final-cta .section-title { color: white; max-width: 600px; margin: 0 auto 0.8rem; }
+  .final-cta .section-desc { color: rgba(255,255,255,0.55); margin: 0 auto 2.5rem; text-align: center; }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-mint {
+    background: var(--mint);
+    color: var(--navy);
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(62,207,175,0.3);
+  }
+  .btn-mint:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(62,207,175,0.4); }
+
+  .btn-ghost-white {
+    background: transparent;
+    color: white;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost-white:hover { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.05); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #070f18;
+    color: rgba(255,255,255,0.5);
+    padding: 3rem 5% 2rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand .logo { margin-bottom: 0.8rem; display: inline-flex; }
+  .footer-brand .logo img { height: 68px; }
+  .footer-brand p {
+    font-size: 0.83rem;
+    line-height: 1.7;
+    max-width: 240px;
+    font-weight: 300;
+  }
+
+  .footer-col h4 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1rem;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: color 0.2s;
+    font-weight: 300;
+  }
+  .footer-col a:hover { color: var(--mint); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-bottom .logo img { height: 46px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { display: none; }
+    .how-grid { grid-template-columns: 1fr 1fr; }
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+    .settings-grid { grid-template-columns: repeat(2, 1fr); }
+    .calendar-grid { grid-template-columns: repeat(6, 1fr); }
+    .body-grid { grid-template-columns: repeat(2, 1fr); }
+    .tracker-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    section { padding: 60px 4%; }
+    .how-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card.wide { grid-column: span 1; }
+    .feature-card.wide .feature-inner { grid-template-columns: 1fr; }
+    .health-gains { grid-template-columns: 1fr; }
+    .dashboard-grid,
+    .settings-grid,
+    .body-grid { grid-template-columns: 1fr; }
+    .calendar-grid { grid-template-columns: repeat(3, 1fr); }
+    .calendar-day { min-height: 62px; }
+    .coach-card { padding: 1.5rem; }
+    .coach-message { max-width: 100%; }
+    .coach-input-row { grid-template-columns: 1fr; }
+    .coach-send-btn { width: 100%; }
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .trust-bar { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="logo" href="#" aria-label="SanaTynys">
+    <img src="assets/sanatynys-logo.svg" alt="SanaTynys">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">Как работает</a></li>
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#personal-dashboard">Мой прогресс</a></li>
+    <li><a href="#quit-calendar">Календарь</a></li>
+    <li><a href="#body-map">Тело</a></li>
+    <li><a href="#tracker">Триггеры</a></li>
+    <li><a href="#coach">Sana Coach</a></li>
+    <li><a href="#cta" class="nav-cta">Начать бесплатно</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="breath-orb"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">Казахстанский health-tech проект</div>
+    <h1>
+      Осознанный путь<br>
+      к <em>свободному</em><br>
+      дыханию
+    </h1>
+    <p class="hero-sub">
+      SanaTynys помогает понять, <strong>почему</strong> ты куришь — и выбрать себя.
+      Не через давление и запреты, а через самопознание, анализ эмоций и заботу о здоровье.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Начать бесплатно →</a>
+      <a href="#how" class="btn-outline">Как это работает</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="dashboard-preview">
+      <div class="dp-header">
+        <div>
+          <div class="dp-greeting">Добро пожаловать, Алия</div>
+          <div class="dp-day">День 14 без сигарет 🌿</div>
+        </div>
+        <div class="dp-streak">
+          <div class="dp-streak-num">14</div>
+          <div class="dp-streak-label">дней</div>
+        </div>
+      </div>
+      <div class="dp-stats">
+        <div class="dp-stat">
+          <div class="dp-stat-val">₸4 200</div>
+          <div class="dp-stat-label">Сэкономлено</div>
+        </div>
+        <div class="dp-stat">
+          <div class="dp-stat-val">280</div>
+          <div class="dp-stat-label">Не выкурено</div>
+        </div>
+        <div class="dp-stat">
+          <div class="dp-stat-val">+18ч</div>
+          <div class="dp-stat-label">Жизни добавлено</div>
+        </div>
+      </div>
+      <div class="dp-breath">
+        <div class="breath-ring"></div>
+        <div class="dp-breath-text">
+          <div class="dp-breath-title">Упражнение 4-7-8</div>
+          <div class="dp-breath-sub">Снижает тягу за 2 минуты</div>
+        </div>
+        <button class="dp-breath-btn">Начать</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><span>🇰🇿</span> Сделано в Казахстане</div>
+  <div class="trust-item"><span>🔬</span> Основано на доказательной медицине</div>
+  <div class="trust-item"><span>🔒</span> Ваши данные защищены</div>
+  <div class="trust-item"><span>🌿</span> Без осуждения и давления</div>
+  <div class="trust-item"><span>✨</span> ИИ-поддержка 24/7</div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-label">Процесс</div>
+  <h2 class="section-title">Как работает SanaTynys</h2>
+  <p class="section-desc">Четыре шага, которые превращают желание бросить курить в устойчивое изменение образа жизни.</p>
+
+  <div class="how-grid">
+    <div class="how-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Самопознание</div>
+      <p class="step-desc">Проходишь умный опрос: узнаём твой тип курильщика, триггеры, эмоциональные паттерны и уровень зависимости.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-num">02</div>
+      <div class="step-icon">🗺️</div>
+      <div class="step-title">Личный план</div>
+      <p class="step-desc">Sana Coach составляет персональную дорожную карту отказа — плавно, без срывов, с реальными шагами.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-num">03</div>
+      <div class="step-icon">📊</div>
+      <div class="step-title">Ежедневный трекинг</div>
+      <p class="step-desc">Отслеживаешь тягу, настроение, триггеры и здоровье. Видишь прогресс — это мотивирует продолжать.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-num">04</div>
+      <div class="step-icon">🌬️</div>
+      <div class="step-title">Свободное дыхание</div>
+      <p class="step-desc">Используешь дыхательные практики и техники осознанности в момент тяги — и становишься сильнее каждый день.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">Возможности</div>
+  <h2 class="section-title">Всё, что нужно для<br>осознанного отказа</h2>
+  <p class="section-desc">Инструменты, которые работают вместе, чтобы ты понял себя и двигался вперёд.</p>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">📈</div>
+      <div class="feature-title">Дневник тяги</div>
+      <p class="feature-desc">Фиксируй каждый момент желания закурить: время, место, эмоция, интенсивность. Паттерны становятся видимыми — и управляемыми.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💚</div>
+      <div class="feature-title">Мониторинг здоровья</div>
+      <p class="feature-desc">Видишь, как улучшается лёгочная функция, сердечный ритм и общее самочувствие день за днём. Конкретные числа, реальная мотивация.</p>
+    </div>
+    <div class="feature-card wide reveal">
+      <div class="feature-inner">
+        <div>
+          <div class="feature-icon">🤖</div>
+          <div class="feature-title">Sana Coach — твой ИИ-помощник</div>
+          <p class="feature-desc">Персональный коуч на основе ИИ, который понимает твою историю, отвечает в любое время суток и не осуждает — только поддерживает. Задай любой вопрос или попроси помощи в трудный момент.</p>
+        </div>
+        <div class="coach-chat">
+          <div class="chat-msg bot">
+            <div class="chat-sender">Sana Coach</div>
+            Алия, я вижу, что сейчас вечер и ты снова чувствуешь тягу. Что произошло сегодня?
+          </div>
+          <div class="chat-msg user">
+            <div class="chat-sender">Ты</div>
+            Устала после работы, хочется расслабиться...
+          </div>
+          <div class="chat-msg bot">
+            <div class="chat-sender">Sana Coach</div>
+            Понимаю 💙 Попробуем технику 4-7-8? Вдох 4 сек, задержка 7, выдох 8. Это быстрее снимет напряжение.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">🧘</div>
+      <div class="feature-title">Дыхательные практики</div>
+      <p class="feature-desc">Интерактивные упражнения прямо в приложении: техника 4-7-8, диафрагмальное дыхание, box breathing для снятия стресса.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Калькулятор экономии</div>
+      <p class="feature-desc">Видишь в реальном времени, сколько денег ты сэкономил, не купив сигареты. Реальные цифры в тенге — мощная мотивация.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL DASHBOARD -->
+<section class="progress-section" id="personal-dashboard">
+  <div class="section-label">Мой прогресс</div>
+  <h2 class="section-title">Мой путь к свободному дыханию</h2>
+  <p class="section-desc">Короткая панель без давления: дни, экономия, отметки и спокойный взгляд на то, что уже меняется.</p>
+
+  <div class="dashboard-grid">
+    <div class="progress-card reveal">
+      <div class="progress-label">Дней без курения</div>
+      <div class="progress-value" id="dashDays">0</div>
+      <div class="progress-note">Ты продолжаешь путь.</div>
+    </div>
+    <div class="progress-card reveal">
+      <div class="progress-label">Сэкономлено денег</div>
+      <div class="progress-value" id="dashMoney">₸0</div>
+      <div class="progress-note">Примерный расчёт в тенге.</div>
+    </div>
+    <div class="progress-card reveal">
+      <div class="progress-label">Не использовано</div>
+      <div class="progress-value" id="dashAvoided">0</div>
+      <div class="progress-note" id="dashAvoidedLabel">сигарет / эпизодов</div>
+    </div>
+    <div class="progress-card reveal">
+      <div class="progress-label">Текущий статус тела</div>
+      <div class="progress-value" id="dashBodyStage">Начало</div>
+      <div class="progress-note">Тело начинает восстанавливаться раньше, чем кажется.</div>
+    </div>
+    <div class="progress-card reveal">
+      <div class="progress-label">Последняя отметка</div>
+      <div class="progress-value" id="dashLastCheck">—</div>
+      <div class="progress-note" id="dashLastCheckNote">Пока нет отметок.</div>
+    </div>
+  </div>
+
+  <div class="settings-panel reveal">
+    <div class="settings-title">Настройки расчёта</div>
+    <div class="settings-grid">
+      <div class="field-group">
+        <label for="quitStartDate">Дата начала отказа</label>
+        <input type="date" id="quitStartDate">
+      </div>
+      <div class="field-group">
+        <label for="habitType">Тип привычки</label>
+        <select id="habitType">
+          <option value="cigarettes">Сигареты</option>
+          <option value="vape">Вейп</option>
+          <option value="both">Сигареты и вейп</option>
+          <option value="not sure">Пока не уверен(а)</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="cigarettesPerDay">Сигарет в день</label>
+        <input type="number" id="cigarettesPerDay" min="0" step="1" placeholder="10">
+      </div>
+      <div class="field-group">
+        <label for="vapeEpisodesPerDay">Эпизодов вейпа в день</label>
+        <input type="number" id="vapeEpisodesPerDay" min="0" step="1" placeholder="8">
+      </div>
+      <div class="field-group">
+        <label for="packPrice">Цена пачки, ₸</label>
+        <input type="number" id="packPrice" min="0" step="50" placeholder="900">
+      </div>
+      <div class="field-group">
+        <label for="cigarettesPerPack">Сигарет в пачке</label>
+        <input type="number" id="cigarettesPerPack" min="1" step="1" placeholder="20">
+      </div>
+      <div class="field-group">
+        <label for="vapeWeeklyCost">Трата на вейп в неделю, ₸</label>
+        <input type="number" id="vapeWeeklyCost" min="0" step="100" placeholder="3000">
+      </div>
+    </div>
+    <div class="settings-actions">
+      <button type="button" class="mini-btn primary" id="saveQuitSettings">Сохранить настройки</button>
+      <span class="save-status" id="settingsSaveStatus"></span>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK CHECK-IN -->
+<section class="quick-checkin" id="quick-checkin">
+  <div class="section-label">Быстрая отметка</div>
+  <h2 class="section-title">Как ты сейчас?</h2>
+  <p class="section-desc">Одна кнопка — и SanaTynys сохранит состояние. Если нужно, Sana Coach мягко подхватит разговор.</p>
+  <div class="checkin-actions">
+    <button type="button" class="checkin-btn" data-state="Спокойно">😌 Спокойно</button>
+    <button type="button" class="checkin-btn" data-state="Тянет курить">😣 Тянет курить</button>
+    <button type="button" class="checkin-btn" data-state="Я сорвался/сорвалась">😔 Я сорвался/сорвалась</button>
+    <button type="button" class="checkin-btn" data-state="Хочу выговориться">💬 Хочу выговориться</button>
+    <button type="button" class="checkin-btn" data-state="Дай дыхательное упражнение">🫁 Дай дыхательное упражнение</button>
+  </div>
+</section>
+
+<!-- QUIT CALENDAR -->
+<section class="calendar-section" id="quit-calendar">
+  <div class="section-label">Календарь</div>
+  <h2 class="section-title">Календарь пути</h2>
+  <p class="section-desc">Последние 30 дней: не для оценки себя, а чтобы увидеть паттерны и моменты, где нужна поддержка.</p>
+  <div class="calendar-panel reveal">
+    <div class="panel-title">Сегодня</div>
+    <div class="calendar-actions">
+      <button type="button" class="mini-btn mint" data-calendar-status="smoke_free">Сегодня не курил(а)</button>
+      <button type="button" class="mini-btn" data-calendar-status="craving">Была тяга, но я удержался/удержалась</button>
+      <button type="button" class="mini-btn rose" data-calendar-status="relapse">Был срыв</button>
+      <button type="button" class="mini-btn" id="addCalendarNote">Добавить заметку</button>
+    </div>
+    <div class="calendar-feedback" id="calendarFeedback">Выбери мягкую отметку на сегодня.</div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+</section>
+
+<!-- BODY MAP -->
+<section class="body-map" id="body-map">
+  <div class="section-label">Восстановление</div>
+  <h2 class="section-title">Что происходит с телом</h2>
+  <p class="section-desc">Твоё тело начинает восстанавливаться раньше, чем кажется. SanaTynys показывает изменения простым языком — без запугивания и давления.</p>
+  <div class="body-grid" id="bodyGrid"></div>
+</section>
+
+<!-- TRIGGER TRACKER -->
+<section class="tracker-section" id="tracker">
+  <div class="section-label">Анализ триггеров</div>
+  <h2 class="section-title">Пойми, <em style="font-style:italic;color:var(--mint-light)">зачем</em> тебе это было нужно</h2>
+  <p class="section-desc">Мы не просто помогаем бросить. Мы помогаем разобраться в глубинных причинах — и найти замену, которая работает лучше.</p>
+
+  <div class="tracker-layout">
+    <div>
+      <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);margin-bottom:1.2rem;font-weight:300;">Твои топ-триггеры (пример профиля)</p>
+      <div class="trigger-list">
+        <div class="trigger-item">
+          <span class="trigger-emoji">😰</span>
+          <span class="trigger-name">Стресс и тревога</span>
+          <div class="trigger-bar-wrap"><div class="trigger-bar" style="width:82%"></div></div>
+          <span class="trigger-pct">82%</span>
+        </div>
+        <div class="trigger-item">
+          <span class="trigger-emoji">☕</span>
+          <span class="trigger-name">После кофе</span>
+          <div class="trigger-bar-wrap"><div class="trigger-bar" style="width:65%"></div></div>
+          <span class="trigger-pct">65%</span>
+        </div>
+        <div class="trigger-item">
+          <span class="trigger-emoji">🌙</span>
+          <span class="trigger-name">Вечерняя скука</span>
+          <div class="trigger-bar-wrap"><div class="trigger-bar" style="width:55%"></div></div>
+          <span class="trigger-pct">55%</span>
+        </div>
+        <div class="trigger-item">
+          <span class="trigger-emoji">👥</span>
+          <span class="trigger-name">Социальные ситуации</span>
+          <div class="trigger-bar-wrap"><div class="trigger-bar" style="width:40%"></div></div>
+          <span class="trigger-pct">40%</span>
+        </div>
+        <div class="trigger-item">
+          <span class="trigger-emoji">🍺</span>
+          <span class="trigger-name">Алкоголь</span>
+          <div class="trigger-bar-wrap"><div class="trigger-bar" style="width:28%"></div></div>
+          <span class="trigger-pct">28%</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);margin-bottom:1.2rem;font-weight:300;">Что происходит с твоим телом</p>
+      <div class="health-gains">
+        <div class="gain-card">
+          <div class="gain-time">20 минут</div>
+          <div class="gain-title">❤️ Пульс нормализуется</div>
+          <p class="gain-desc">Давление и сердечный ритм возвращаются к норме</p>
+        </div>
+        <div class="gain-card">
+          <div class="gain-time">8 часов</div>
+          <div class="gain-title">🫁 CO₂ выходит</div>
+          <p class="gain-desc">Кислород в крови достигает нормального уровня</p>
+        </div>
+        <div class="gain-card">
+          <div class="gain-time">2 недели</div>
+          <div class="gain-title">🏃 Лёгкость в дыхании</div>
+          <p class="gain-desc">Кровообращение улучшается, ходьба становится легче</p>
+        </div>
+        <div class="gain-card">
+          <div class="gain-time">1 год</div>
+          <div class="gain-title">💚 Риск в 2 раза ниже</div>
+          <p class="gain-desc">Риск сердечных заболеваний снижается вдвое</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COACH -->
+<section class="coach-section" id="coach">
+  <div class="section-label">ИИ-помощник</div>
+  <h2 class="section-title">Знакомься — Sana Coach</h2>
+  <p class="section-desc" style="margin: 0 auto;">Твой персональный ИИ-коуч, который всегда рядом — без осуждения, без давления, 24/7.</p>
+
+  <div class="coach-card reveal">
+    <div class="coach-avatar">🌿</div>
+    <div class="coach-name">Sana Coach</div>
+    <p class="coach-tagline">ИИ-помощник на пути к свободному дыханию · Всегда онлайн</p>
+    <div class="coach-abilities">
+      <span class="ability-tag">💬 Эмоциональная поддержка</span>
+      <span class="ability-tag">🔍 Анализ триггеров</span>
+      <span class="ability-tag">🧘 Дыхательные техники</span>
+      <span class="ability-tag">📋 Советы по срыву</span>
+      <span class="ability-tag">📊 Интерпретация данных</span>
+      <span class="ability-tag">🌙 Поддержка ночью</span>
+    </div>
+    <div class="coach-chat-live" aria-label="Чат Sana Coach">
+      <div class="coach-messages" id="coachMessages" aria-live="polite">
+        <div class="coach-message assistant">Привет. Я Sana Coach. Можешь написать, что сейчас происходит: тяга, стресс, срыв, вейп или давление друзей. Разберём это спокойно, без стыда и давления.</div>
+      </div>
+      <div class="coach-quick-actions" aria-label="Быстрые вопросы">
+        <button type="button" class="coach-quick-btn" data-message="Хочу курить сейчас">Хочу курить сейчас</button>
+        <button type="button" class="coach-quick-btn" data-message="Я сорвался(-ась)">Я сорвался(-ась)</button>
+        <button type="button" class="coach-quick-btn" data-message="Все друзья курят">Все друзья курят</button>
+        <button type="button" class="coach-quick-btn" data-message="Курю из-за стресса">Курю из-за стресса</button>
+        <button type="button" class="coach-quick-btn" data-message="Хочу отказаться от вейпа">Хочу отказаться от вейпа</button>
+      </div>
+      <div class="coach-input-row">
+        <textarea class="coach-input" id="coachInput" rows="2" placeholder="Напиши Sana Coach..." aria-label="Сообщение для Sana Coach"></textarea>
+        <button type="button" class="coach-send-btn" id="coachSendBtn">Отправить</button>
+      </div>
+      <div class="coach-tools">
+        <button type="button" class="mini-btn" id="clearChatHistory">Очистить историю</button>
+        <button type="button" class="mini-btn mint" id="downloadJournal">Скачать мой дневник</button>
+      </div>
+      <p class="coach-disclaimer">Sana Coach не заменяет врача или психолога. При сильной зависимости, плохом самочувствии или тревожных симптомах обратись к специалисту.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-label" style="text-align:center;display:block;">FAQ</div>
+  <h2 class="section-title" style="text-align:center;">Частые вопросы</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Нужно ли бросать сразу или можно постепенно?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">SanaTynys поддерживает любой подход — и резкий отказ, и постепенное снижение. Sana Coach поможет составить план, который подходит именно тебе, исходя из твоей истории и психологии зависимости.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Sana Coach — это реальный человек или ИИ?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Sana Coach — это интеллектуальный ИИ-помощник, специально обученный для поддержки в процессе отказа от курения. Он работает 24/7, помнит твою историю и адаптируется к твоим нуждам — но не заменяет живого специалиста. На тарифе «Глубокий» также доступны консультации реального специалиста.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Что происходит с моими данными?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Все личные данные хранятся в зашифрованном виде и никогда не передаются третьим лицам. Ты можешь экспортировать или удалить свои данные в любой момент. Мы следуем принципам GDPR и казахстанского законодательства о защите данных.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Что делать, если я сорвался?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Срыв — это часть пути, а не провал. SanaTynys не осуждает. Sana Coach поможет разобрать ситуацию: что произошло, какой триггер сработал — и как не допустить повторения. Главное — продолжать.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        Есть ли приложение для смартфона?
+        <span class="faq-arrow">▼</span>
+      </div>
+      <div class="faq-a">Мобильные приложения для iOS и Android находятся в разработке. Сейчас SanaTynys доступен как адаптивный веб-сайт, который отлично работает на любом устройстве. Оставь email при регистрации — мы уведомим о выходе приложения.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="cta">
+  <div class="section-label" style="justify-content:center;color:var(--mint-light);">Начать сейчас</div>
+  <h2 class="section-title">
+    Не просто бросить курить.<br>
+    <em style="font-style:italic;color:var(--mint-light)">Выбрать себя.</em>
+  </h2>
+  <p class="section-desc">
+    SanaTynys — осознанный путь к свободному дыханию.<br>
+    Начни бесплатно. Без кредитной карты.
+  </p>
+  <div class="cta-actions">
+    <a href="#" class="btn-mint">Начать бесплатно →</a>
+    <a href="#how" class="btn-ghost-white">Узнать больше</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a class="logo" href="#" aria-label="SanaTynys">
+        <img src="assets/sanatynys-logo.svg" alt="SanaTynys">
+      </a>
+      <p>Осознанный путь к свободному дыханию. Казахстанский health-tech стартап, основанный на доказательной медицине и заботе о людях.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Платформа</h4>
+      <a href="#how">Как работает</a>
+      <a href="#personal-dashboard">Мой прогресс</a>
+      <a href="#quit-calendar">Календарь</a>
+      <a href="#coach">Sana Coach</a>
+    </div>
+    <div class="footer-col">
+      <h4>Ресурсы</h4>
+      <a href="#">Блог</a>
+      <a href="#">Научная база</a>
+      <a href="#body-map">Карта тела</a>
+      <a href="#">Поддержка</a>
+    </div>
+    <div class="footer-col">
+      <h4>Компания</h4>
+      <a href="#">О проекте</a>
+      <a href="#">Команда</a>
+      <a href="#">Контакты</a>
+      <a href="#">Конфиденциальность</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <a class="logo" href="#" style="text-decoration:none;" aria-label="SanaTynys">
+      <img src="assets/sanatynys-logo.svg" alt="SanaTynys">
+    </a>
+    <span>© 2025 SanaTynys. Все права защищены.</span>
+    <span>🇰🇿 Сделано в Казахстане с ❤️</span>
+  </div>
+</footer>
+
+<script>
+  const GEMINI_API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE";
+  const GEMINI_MODEL = "gemini-2.5-flash";
+  const GEMINI_FALLBACK_MODELS = ["gemini-2.0-flash", "gemini-2.0-flash-lite"];
+
+  // TODO: перед production вынести API key на backend/serverless function/.env.
+  // Для demo/MVP ключ можно временно вставить сюда, но хранить API key на frontend нельзя.
+  const SANA_COACH_SYSTEM_PROMPT = `Ты Sana Coach — AI-помощник проекта SanaTynys.
+
+Sana Coach — это не психолог и не врач. Он не лечит и не ставит диагнозы. Его роль — быть мягким AI-собеседником для саморефлексии, поддержки в момент тяги и анализа привычек. Он помогает человеку заметить связь между эмоцией, ситуацией, телом и желанием курить.
+
+SanaTynys — казахстанский health-tech / wellness проект, который помогает людям снижать или прекращать курение и использование никотиновых продуктов через самопознание, анализ триггеров, эмоций, привычек и состояния здоровья.
+
+Твоя главная задача:
+Помогать человеку понять, почему ему хочется курить или использовать вейп, поддерживать его в момент тяги, помогать после срыва и подбирать реалистичные следующие шаги под его ситуацию.
+
+Ты должен подстраиваться под разные уровни зависимости:
+- лёгкая привычка;
+- социальное курение;
+- вейпинг;
+- автоматическое курение;
+- эмоциональное курение;
+- стресс-зависимость;
+- многолетняя никотиновая зависимость;
+- человек уже бросает;
+- человек только думает бросить;
+- человек сорвался;
+- человек не уверен, хочет ли бросать.
+
+Ты НЕ врач, НЕ психолог и НЕ психотерапевт.
+Ты не ставишь диагнозы.
+Ты не назначаешь лекарства.
+Ты не назначаешь лечение.
+Ты не обещаешь 100% результат.
+Ты не пугаешь, не давишь и не стыдишь.
+Ты не говоришь человеку, что он слабый.
+Ты не используешь токсичную мотивацию.
+
+Твой стиль:
+- мягкий;
+- спокойный;
+- человеческий;
+- тёплый;
+- конкретный;
+- без лишней воды;
+- без повторения одних и тех же фраз;
+- без шаблонных ответов;
+- с уважением к пользователю;
+- на русском языке, если пользователь не попросит другой язык.
+
+Очень важно:
+Не повторяй в каждом ответе одни и те же фразы.
+Фразы “Это не провал, это данные”, “Маленький шаг тоже считается”, “Тебе не нужно победить весь день — только следующие 10 минут” используй только тогда, когда они реально подходят по контексту. Не вставляй их механически в каждый ответ.
+
+Ты должен отвечать гибко:
+1. Сначала понять ситуацию пользователя.
+2. Определить возможный триггер.
+3. Оценить уровень срочности и тяжести.
+4. Дать короткую поддержку.
+5. Предложить конкретный следующий шаг.
+6. При необходимости задать 1–2 уточняющих вопроса.
+7. Если ситуация серьёзная — мягко направить к специалисту.
+
+Основная логика анализа:
+
+Когда пользователь пишет, что хочет курить прямо сейчас:
+- спроси уровень тяги от 1 до 10, если он не указан;
+- спроси, какая эмоция сейчас сильнее всего;
+- помоги пережить ближайшие 5–10 минут;
+- предложи 1–2 действия, а не длинный список;
+- подстрой совет под причину:
+  стресс → дыхание, вода, пауза;
+  скука → короткая активность;
+  компания → фраза отказа;
+  тревога → grounding 5-4-3-2-1;
+  злость → выйти пройтись, физически разрядиться;
+  усталость → отдых, вода, еда, сон;
+  после еды → заменить ритуал;
+  утро → создать новый утренний ритуал.
+
+Когда пользователь пишет, что сорвался:
+- не ругай;
+- не обнуляй его прогресс;
+- помоги разобрать ситуацию;
+- спроси, что произошло перед курением;
+- спроси, какая эмоция была сильной;
+- помоги найти один вывод на следующий раз;
+- не делай ответ слишком драматичным.
+
+Когда пользователь пишет, что зависимость сильная:
+- признай, что это может быть тяжело;
+- объясни, что сильная тяга не означает слабость;
+- предложи более мягкий и реалистичный план;
+- не заставляй бросать резко;
+- предложи обратиться к врачу или специалисту, особенно если человек курит много лет, курит очень много, имеет сильные симптомы отмены или проблемы со здоровьем;
+- можно упомянуть, что существуют доказательные методы поддержки, включая консультации специалистов и медицинские методы, но не назначай лечение.
+
+Когда пользователь пишет, что зависимость не сильная:
+- не преувеличивай проблему;
+- помоги заметить привычку до того, как она усилится;
+- предложи дневник триггеров;
+- предложи уменьшить автоматические ситуации;
+- помоги заменить ритуал.
+
+Когда пользователь пишет про вейп:
+- не говори, что “это просто баловство”;
+- объясни, что вейп тоже может поддерживать никотиновую зависимость;
+- помоги отследить автоматическое использование;
+- спроси, в какие моменты рука сама тянется к вейпу;
+- предложи ограничить конкретные ситуации, а не только “просто перестать”.
+
+Когда пользователь пишет, что друзья курят:
+- не обвиняй друзей;
+- помоги подготовить короткую фразу отказа;
+- предложи заранее выбрать поведение в компании;
+- поддержи право человека не объясняться долго.
+
+Когда пользователь пишет, что курит из-за стресса:
+- объясни, что мозг мог связать сигарету с быстрым облегчением;
+- предложи альтернативу, которая снижает напряжение;
+- не обесценивай стресс;
+- спроси, что именно сейчас давит.
+
+Когда пользователь пишет, что не хочет бросать:
+- не спорь;
+- не дави;
+- спроси, что ему нравится и что не нравится в курении;
+- помоги увидеть обе стороны;
+- используй стиль мотивационного интервьюирования;
+- уважай автономию пользователя.
+
+Когда пользователь пишет, что хочет бросить, но боится:
+- нормализуй страх;
+- предложи маленький первый шаг;
+- помоги выбрать подход: резкий отказ, постепенное снижение или сначала наблюдение;
+- не обещай, что будет легко.
+
+Психологическая база, которую ты используешь:
+1. Цикл привычки:
+   триггер → действие → награда.
+2. CBT-логика:
+   ситуация → мысль → эмоция → действие.
+3. Мотивационное интервьюирование:
+   не давить, а помогать человеку самому найти причину изменений.
+4. Осознанность:
+   заметить тягу, эмоцию и тело до действия.
+5. Поддержка после срыва:
+   анализировать, а не стыдить.
+
+Ты можешь задавать такие вопросы:
+- Что произошло за 5 минут до того, как захотелось курить?
+- Какая эмоция сейчас самая сильная?
+- Где ты сейчас?
+- Ты один/одна или с кем-то?
+- Что сигарета должна была тебе дать в этот момент?
+- Насколько сильная тяга от 1 до 10?
+- Что уже помогало тебе раньше хотя бы немного?
+- Ты хочешь бросить полностью, уменьшить или пока просто понять свою привычку?
+
+Не задавай слишком много вопросов сразу.
+Обычно достаточно 1–2 вопросов за ответ.
+
+Формат ответа:
+- Не пиши слишком длинно.
+- Обычно отвечай 5–10 предложениями.
+- Если пользователь в острой тяге, отвечай короче и конкретнее.
+- Если пользователь просит план, можно дать структуру по шагам.
+- Используй списки только когда это реально удобно.
+- Не звучать как учебник.
+- Не повторять одинаковую структуру каждый раз.
+- Всегда заканчивай последнюю фразу полностью. Не обрывай ответ посреди слова или предложения.
+- Важные слова и короткие ключевые фразы можно выделять markdown-жирным через **такой формат**. Не используй звёздочки ни для чего другого.
+
+Примеры хорошего тона:
+- “Похоже, сейчас сигарета для тебя не про удовольствие, а про попытку быстро снять напряжение.”
+- “Давай не будем разбирать всю жизнь сразу. Начнём с этого момента.”
+- “Сейчас важно не быть идеальным, а выбрать один следующий шаг.”
+- “Ты не обязан бросать резко, если пока не готов. Можно начать с наблюдения.”
+- “Если тяга очень сильная, лучше не оставаться с этим одному.”
+
+Чего нельзя делать:
+- Не говорить “просто не кури”.
+- Не говорить “у тебя нет силы воли”.
+- Не пугать болезнями без необходимости.
+- Не ставить диагнозы.
+- Не назначать таблетки, пластыри, препараты или дозировки.
+- Не говорить, что дыхание или AI полностью заменяют лечение.
+- Не обвинять пользователя за срыв.
+- Не делать вид, что всё легко.
+
+Казахстанский контекст:
+Если уместно, учитывай ситуации:
+- школа;
+- колледж;
+- университет;
+- ЕНТ;
+- сессия;
+- общежитие;
+- работа;
+- перерывы с коллегами;
+- друзья, которые курят;
+- вейпы среди молодёжи;
+- траты в тенге;
+- семья и страх признаться родителям.
+
+Но не вставляй Казахстан в каждый ответ искусственно. Используй контекст только когда он подходит.
+
+Безопасность:
+Если пользователь пишет о боли в груди, сильной одышке, обмороке, беременности, серьёзных проблемах со здоровьем, сильной панике, депрессии, самоповреждении, суицидальных мыслях или опасных симптомах:
+- ответь спокойно;
+- не пытайся лечить это через чат;
+- посоветуй срочно обратиться к врачу, экстренной помощи или доверенному взрослому/специалисту;
+- если есть риск немедленной опасности, предложи обратиться в местные экстренные службы.
+
+Если пользователь несовершеннолетний:
+- говори особенно бережно;
+- не стыди;
+- не поощряй скрывать опасные симптомы;
+- если ситуация серьёзная, предложи обратиться к доверенному взрослому, врачу, школьному психологу или специалисту.
+
+Твоя цель:
+Не заставить человека немедленно стать идеальным.
+Твоя цель — помочь ему лучше понять себя, снизить вред, пережить тягу, найти свои триггеры и постепенно двигаться к свободному дыханию.`;
+
+  const STORAGE_KEYS = {
+    chatHistory: 'chatHistory',
+    userProfile: 'userProfile',
+    quitSettings: 'quitSettings',
+    quitCalendar: 'quitCalendar',
+    checkins: 'checkins',
+    triggerHistory: 'triggerHistory'
+  };
+
+  const defaultQuitSettings = {
+    startDate: '',
+    habitType: 'cigarettes',
+    cigarettesPerDay: 10,
+    vapeEpisodesPerDay: 8,
+    packPrice: 900,
+    cigarettesPerPack: 20,
+    vapeWeeklyCost: 3000
+  };
+
+  const bodyStages = [
+    { days: 0, time: 'Начало', title: 'Первый шаг', text: 'Ты уже начал(а) наблюдать за привычкой. Это важная часть пути.' },
+    { days: 0.014, time: '20 минут', title: 'Сердцу немного легче', text: 'Пульс начинает снижаться, телу становится чуть спокойнее.' },
+    { days: 0.5, time: '12 часов', title: 'Кислорода больше', text: 'Уровень угарного газа падает, кислород переносится лучше.' },
+    { days: 1, time: '24 часа', title: 'Первый большой шаг', text: 'Организм делает первый заметный шаг к очищению.' },
+    { days: 14, time: '2–12 недель', title: 'Дышать легче', text: 'Кровообращение и дыхание постепенно улучшаются.' },
+    { days: 30, time: '1 месяц', title: 'Больше контроля', text: 'Тяга может становиться слабее, появляется больше выбора.' },
+    { days: 90, time: '3–9 месяцев', title: 'Свободнее дыхание', text: 'Может стать меньше кашля и одышки.' },
+    { days: 365, time: '1 год', title: 'Долгая защита', text: 'Сердце получает серьёзную долгосрочную поддержку.' }
+  ];
+
+  function readStorage(key, fallback) {
+    try {
+      const value = localStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    } catch (error) {
+      console.warn('Storage read failed:', key, error);
+      return fallback;
+    }
+  }
+
+  function writeStorage(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  function todayISO() {
+    return formatDateISO(new Date());
+  }
+
+  function formatDateISO(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function getQuitSettings() {
+    return { ...defaultQuitSettings, ...readStorage(STORAGE_KEYS.quitSettings, {}) };
+  }
+
+  let chatMessages = readStorage(STORAGE_KEYS.chatHistory, []);
+  const coachMessagesEl = document.getElementById('coachMessages');
+  const coachInputEl = document.getElementById('coachInput');
+  const coachSendBtn = document.getElementById('coachSendBtn');
+  let coachIsLoading = false;
+
+  function addCoachMessage(role, content, extraClass = '') {
+    if (!coachMessagesEl) return null;
+    const messageEl = document.createElement('div');
+    messageEl.className = `coach-message ${role}${extraClass ? ` ${extraClass}` : ''}`;
+    renderCoachMessageContent(messageEl, content);
+    coachMessagesEl.appendChild(messageEl);
+    coachMessagesEl.scrollTop = coachMessagesEl.scrollHeight;
+    return messageEl;
+  }
+
+  function escapeHtml(text) {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function formatCoachMessage(content) {
+    return escapeHtml(content).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  }
+
+  function renderCoachMessageContent(element, content) {
+    element.innerHTML = formatCoachMessage(content);
+  }
+
+  function saveChatHistory() {
+    writeStorage(STORAGE_KEYS.chatHistory, chatMessages.slice(-80));
+  }
+
+  function restoreChatHistory() {
+    if (!coachMessagesEl) return;
+    coachMessagesEl.innerHTML = '';
+    if (!chatMessages.length) {
+      addCoachMessage('assistant', 'Привет. Я Sana Coach. Можешь написать, что сейчас происходит: тяга, стресс, срыв, вейп или давление друзей. Разберём это спокойно, без стыда и давления.');
+      return;
+    }
+    chatMessages.forEach((item) => {
+      addCoachMessage(item.role === 'user' ? 'user' : 'assistant', item.content);
+    });
+  }
+
+  function setCoachLoading(isLoading) {
+    coachIsLoading = isLoading;
+    if (coachSendBtn) coachSendBtn.disabled = isLoading;
+  }
+
+  function fallbackCoachMessage() {
+    return 'Сейчас AI-подключение недоступно, но я рядом. Попробуй пережить следующие 10 минут: выпей воды, сделай 3 цикла дыхания 4-7-8 и запиши, что стало триггером.';
+  }
+
+  function getGeminiUserErrorMessage(error) {
+    const errorText = String(error?.message || '').toLowerCase();
+
+    if (window.location.protocol === 'file:') {
+      return 'Gemini API может не отвечать, если сайт открыт напрямую как файл. Запусти страницу через локальный сервер или опубликуй её на домене, затем попробуй снова.';
+    }
+
+    if (errorText.includes('api key not valid') || errorText.includes('invalid api key')) {
+      return 'Ключ Gemini не прошёл проверку. Проверь, что в GEMINI_API_KEY вставлен ключ из Google AI Studio без лишних пробелов.';
+    }
+
+    if (errorText.includes('permission') || errorText.includes('referer') || errorText.includes('referrer') || errorText.includes('403')) {
+      return 'Gemini отклонил запрос. Проверь ограничения API key в Google Cloud или AI Studio: текущий домен должен быть разрешён для этого ключа.';
+    }
+
+    if (errorText.includes('quota') || errorText.includes('too many requests') || errorText.includes('429')) {
+      return 'У этого Gemini API key сейчас закончилась квота или модель временно недоступна по лимитам. Попробуй чуть позже, проверь лимиты в Google AI Studio или укажи другую доступную модель в GEMINI_MODEL.';
+    }
+
+    if (errorText.includes('not found') || errorText.includes('404') || errorText.includes('unsupported')) {
+      return 'Выбранная Gemini-модель недоступна для этого ключа. Попробуй заменить GEMINI_MODEL на другую доступную модель Gemini.';
+    }
+
+    return fallbackCoachMessage();
+  }
+
+  function calculateDaysWithoutSmoking(settings = getQuitSettings()) {
+    if (!settings.startDate) return 0;
+    const start = new Date(`${settings.startDate}T00:00:00`);
+    const now = new Date();
+    if (Number.isNaN(start.getTime())) return 0;
+    return Math.max(0, Math.floor((now - start) / 86400000));
+  }
+
+  function calculateQuitStats(settings = getQuitSettings()) {
+    const days = calculateDaysWithoutSmoking(settings);
+    const cigarettesPerDay = Number(settings.cigarettesPerDay) || 0;
+    const vapeEpisodesPerDay = Number(settings.vapeEpisodesPerDay) || 0;
+    const packPrice = Number(settings.packPrice) || 0;
+    const cigarettesPerPack = Number(settings.cigarettesPerPack) || 20;
+    const vapeWeeklyCost = Number(settings.vapeWeeklyCost) || 0;
+    const cigaretteMoney = days * cigarettesPerDay * (packPrice / Math.max(1, cigarettesPerPack));
+    const vapeMoney = (days / 7) * vapeWeeklyCost;
+    const cigaretteItems = days * cigarettesPerDay;
+    const vapeItems = days * vapeEpisodesPerDay;
+    let savedMoney = 0;
+    let avoidedItems = 0;
+
+    if (settings.habitType === 'vape') {
+      savedMoney = vapeMoney;
+      avoidedItems = vapeItems;
+    } else if (settings.habitType === 'both') {
+      savedMoney = cigaretteMoney + vapeMoney;
+      avoidedItems = cigaretteItems + vapeItems;
+    } else if (settings.habitType === 'not sure' || settings.habitType === 'not_sure') {
+      savedMoney = Math.max(cigaretteMoney, vapeMoney);
+      avoidedItems = Math.max(cigaretteItems, vapeItems);
+    } else {
+      savedMoney = cigaretteMoney;
+      avoidedItems = cigaretteItems;
+    }
+
+    return { days, savedMoney: Math.round(savedMoney), avoidedItems: Math.round(avoidedItems) };
+  }
+
+  function formatTenge(value) {
+    return `₸${Math.round(value).toLocaleString('ru-RU')}`;
+  }
+
+  function getCurrentBodyStage(days) {
+    return bodyStages.reduce((current, stage) => days >= stage.days ? stage : current, bodyStages[0]);
+  }
+
+  function populateSettingsForm() {
+    const settings = getQuitSettings();
+    const fields = {
+      quitStartDate: settings.startDate || todayISO(),
+      habitType: settings.habitType,
+      cigarettesPerDay: settings.cigarettesPerDay,
+      vapeEpisodesPerDay: settings.vapeEpisodesPerDay,
+      packPrice: settings.packPrice,
+      cigarettesPerPack: settings.cigarettesPerPack,
+      vapeWeeklyCost: settings.vapeWeeklyCost
+    };
+    Object.entries(fields).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = value;
+    });
+  }
+
+  function readSettingsForm() {
+    return {
+      startDate: document.getElementById('quitStartDate')?.value || todayISO(),
+      habitType: document.getElementById('habitType')?.value || 'cigarettes',
+      cigarettesPerDay: Number(document.getElementById('cigarettesPerDay')?.value) || 0,
+      vapeEpisodesPerDay: Number(document.getElementById('vapeEpisodesPerDay')?.value) || 0,
+      packPrice: Number(document.getElementById('packPrice')?.value) || 0,
+      cigarettesPerPack: Number(document.getElementById('cigarettesPerPack')?.value) || 20,
+      vapeWeeklyCost: Number(document.getElementById('vapeWeeklyCost')?.value) || 0
+    };
+  }
+
+  function renderDashboard() {
+    const settings = getQuitSettings();
+    const stats = calculateQuitStats(settings);
+    const stage = getCurrentBodyStage(stats.days);
+    const checkins = readStorage(STORAGE_KEYS.checkins, []);
+    const calendar = readStorage(STORAGE_KEYS.quitCalendar, {});
+    const lastCheckin = checkins[checkins.length - 1];
+    const lastCalendar = Object.values(calendar).sort((a, b) => a.date.localeCompare(b.date)).at(-1);
+    const last = lastCheckin || lastCalendar;
+    const avoidedLabel = settings.habitType === 'vape' ? 'эпизодов вейпа' : settings.habitType === 'both' ? 'сигарет / эпизодов' : 'сигарет';
+
+    const setText = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+
+    setText('dashDays', stats.days);
+    setText('dashMoney', formatTenge(stats.savedMoney));
+    setText('dashAvoided', stats.avoidedItems);
+    setText('dashAvoidedLabel', avoidedLabel);
+    setText('dashBodyStage', stage.time);
+    setText('dashLastCheck', last ? (last.state || calendarStatusLabel(last.status)) : '—');
+    setText('dashLastCheckNote', last?.note || (last ? 'Отметка сохранена.' : 'Пока нет отметок.'));
+    renderBodyMap();
+  }
+
+  function calendarStatusLabel(status) {
+    return {
+      smoke_free: 'Не курил(а)',
+      craving: 'Была тяга',
+      relapse: 'Был срыв',
+      empty: 'Нет отметки'
+    }[status] || 'Нет отметки';
+  }
+
+  function renderCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    if (!grid) return;
+    const calendar = readStorage(STORAGE_KEYS.quitCalendar, {});
+    const today = new Date();
+    grid.innerHTML = '';
+
+    for (let i = 29; i >= 0; i -= 1) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const iso = formatDateISO(date);
+      const entry = calendar[iso];
+      const status = entry?.status || 'empty';
+      const dayEl = document.createElement('div');
+      dayEl.className = `calendar-day ${status}`;
+      dayEl.title = entry?.note || calendarStatusLabel(status);
+      dayEl.innerHTML = `<strong>${date.getDate()}</strong><span>${calendarStatusLabel(status)}</span>`;
+      grid.appendChild(dayEl);
+    }
+  }
+
+  function saveCalendarStatus(status) {
+    const calendar = readStorage(STORAGE_KEYS.quitCalendar, {});
+    const date = todayISO();
+    const previous = calendar[date] || {};
+    calendar[date] = {
+      date,
+      status,
+      note: previous.note || '',
+      createdAt: previous.createdAt || new Date().toISOString()
+    };
+    writeStorage(STORAGE_KEYS.quitCalendar, calendar);
+    const feedback = document.getElementById('calendarFeedback');
+    if (feedback) {
+      feedback.textContent = status === 'relapse'
+        ? 'Срыв — это не провал. Это данные о твоём триггере.'
+        : 'Отметка сохранена. Один маленький шаг сейчас важнее идеального плана.';
+    }
+    renderCalendar();
+    renderDashboard();
+  }
+
+  function saveCalendarNote() {
+    const note = prompt('Короткая заметка на сегодня:');
+    if (note === null) return;
+    const calendar = readStorage(STORAGE_KEYS.quitCalendar, {});
+    const date = todayISO();
+    const previous = calendar[date] || {};
+    calendar[date] = {
+      date,
+      status: previous.status || 'craving',
+      note: note.trim(),
+      createdAt: previous.createdAt || new Date().toISOString()
+    };
+    writeStorage(STORAGE_KEYS.quitCalendar, calendar);
+    renderCalendar();
+    renderDashboard();
+  }
+
+  function renderBodyMap() {
+    const grid = document.getElementById('bodyGrid');
+    if (!grid) return;
+    const days = calculateQuitStats().days;
+    const active = getCurrentBodyStage(days);
+    grid.innerHTML = '';
+    bodyStages.forEach((stage) => {
+      const card = document.createElement('div');
+      card.className = `body-card${stage === active ? ' active' : ''}`;
+      card.innerHTML = `
+        <div class="body-time">${stage.time}</div>
+        <div class="body-title">${stage.title}</div>
+        <p class="body-text">${stage.text}</p>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function saveCheckin(state) {
+    const checkins = readStorage(STORAGE_KEYS.checkins, []);
+    const entry = { state, createdAt: new Date().toISOString() };
+    checkins.push(entry);
+    writeStorage(STORAGE_KEYS.checkins, checkins.slice(-120));
+    renderDashboard();
+
+    let message = `Моё состояние сейчас: ${state}.`;
+    if (state === 'Тянет курить') {
+      message += ' Поддержи меня мягко и предложи один маленький шаг на ближайшие 2 минуты.';
+    } else if (state === 'Я сорвался/сорвалась') {
+      message += ' Не стыди меня, помоги спокойно разобрать триггер.';
+    }
+    sendMessageToGemini(message);
+  }
+
+  function recordTriggerFromText(text) {
+    const lower = text.toLowerCase();
+    const triggerMap = [
+      ['стресс', 'стресс'],
+      ['тревог', 'тревога'],
+      ['друз', 'социальная среда'],
+      ['вейп', 'вейп'],
+      ['сорвал', 'срыв'],
+      ['тянет', 'тяга'],
+      ['кофе', 'кофе'],
+      ['скук', 'скука']
+    ];
+    const found = triggerMap.find(([needle]) => lower.includes(needle));
+    if (!found) return;
+    const history = readStorage(STORAGE_KEYS.triggerHistory, []);
+    history.push({ trigger: found[1], source: text.slice(0, 120), createdAt: new Date().toISOString() });
+    writeStorage(STORAGE_KEYS.triggerHistory, history.slice(-80));
+  }
+
+  function getRecentRelapses(days = 7) {
+    const since = Date.now() - days * 86400000;
+    return Object.values(readStorage(STORAGE_KEYS.quitCalendar, {}))
+      .filter((entry) => entry.status === 'relapse' && new Date(`${entry.date}T00:00:00`).getTime() >= since);
+  }
+
+  function buildSanaCoachContext() {
+    const settings = getQuitSettings();
+    const stats = calculateQuitStats(settings);
+    const checkins = readStorage(STORAGE_KEYS.checkins, []).slice(-3);
+    const triggers = readStorage(STORAGE_KEYS.triggerHistory, []).slice(-5);
+    const relapses = getRecentRelapses(7);
+    return `Контекст пользователя SanaTynys:
+- Дней без курения/вейпа: ${stats.days}
+- Примерно сэкономлено: ${formatTenge(stats.savedMoney)}
+- Не использовано: ${stats.avoidedItems}
+- Тип привычки: ${settings.habitType}
+- Сигарет в день: ${settings.cigarettesPerDay || 0}
+- Эпизодов вейпа в день: ${settings.vapeEpisodesPerDay || 0}
+- Срывы за последние 7 дней: ${relapses.length}
+- Последние check-in: ${checkins.map((item) => item.state).join(', ') || 'нет'}
+- Частые триггеры: ${triggers.map((item) => item.trigger || item).join(', ') || 'пока нет данных'}
+Используй этот контекст мягко и не перечисляй его полностью, если пользователь не просит.`;
+  }
+
+  function downloadJournal() {
+    const journal = {
+      userProfile: readStorage(STORAGE_KEYS.userProfile, {}),
+      quitSettings: getQuitSettings(),
+      quitCalendar: readStorage(STORAGE_KEYS.quitCalendar, {}),
+      checkins: readStorage(STORAGE_KEYS.checkins, []),
+      triggerHistory: readStorage(STORAGE_KEYS.triggerHistory, []),
+      chatHistory: chatMessages
+    };
+    const blob = new Blob([JSON.stringify(journal, null, 2)], { type: 'application/json;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `sanatynys-diary-${todayISO()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function getGeminiContents() {
+    return [
+      { role: 'user', parts: [{ text: buildSanaCoachContext() }] },
+      ...chatMessages.slice(-12).map((item) => ({
+      role: item.role,
+      parts: [{ text: item.content }]
+      }))
+    ];
+  }
+
+  function isAssistantMessageComplete(text, finishReason) {
+    const cleanText = text.trim();
+    if (!cleanText) return false;
+    if (finishReason && finishReason !== 'STOP') return false;
+    return /[.!?…。！？)"'»]$/.test(cleanText);
+  }
+
+  async function callSanaCoachAPI(message, context) {
+    return getGeminiAssistantMessage();
+  }
+
+  async function requestGeminiCompletion(model, contents = getGeminiContents()) {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-goog-api-key": GEMINI_API_KEY
+      },
+      body: JSON.stringify({
+        systemInstruction: {
+          parts: [{ text: SANA_COACH_SYSTEM_PROMPT }]
+        },
+        contents,
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 1400
+        }
+      })
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data.error?.message || `Gemini request failed with status ${response.status}`);
+    }
+
+    const assistantMessage = data.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text || '')
+      .join('')
+      .trim();
+
+    if (!assistantMessage) {
+      throw new Error('Gemini вернул пустой ответ');
+    }
+
+    return {
+      text: assistantMessage,
+      finishReason: data.candidates?.[0]?.finishReason || null
+    };
+  }
+
+  async function completeGeminiMessage(model, firstResult) {
+    let fullText = firstResult.text;
+    let finishReason = firstResult.finishReason;
+    let attempts = 0;
+
+    while (!isAssistantMessageComplete(fullText, finishReason) && attempts < 2) {
+      attempts += 1;
+      const continuationContents = [
+        ...getGeminiContents(),
+        { role: 'model', parts: [{ text: fullText }] },
+        {
+          role: 'user',
+          parts: [{
+            text: 'Твой предыдущий ответ оборвался посреди фразы. Продолжи ровно с места обрыва и закончи мысль. Не повторяй уже написанное.'
+          }]
+        }
+      ];
+      const continuation = await requestGeminiCompletion(model, continuationContents);
+      fullText = `${fullText}${fullText.endsWith(' ') ? '' : ' '}${continuation.text}`.trim();
+      finishReason = continuation.finishReason;
+    }
+
+    return fullText;
+  }
+
+  async function getGeminiAssistantMessage() {
+    const modelsToTry = [GEMINI_MODEL, ...GEMINI_FALLBACK_MODELS.filter((model) => model !== GEMINI_MODEL)];
+    let lastError;
+
+    for (const model of modelsToTry) {
+      try {
+        const firstResult = await requestGeminiCompletion(model);
+        return await completeGeminiMessage(model, firstResult);
+      } catch (error) {
+        lastError = error;
+        const errorText = String(error?.message || '').toLowerCase();
+        const canTryNextModel = errorText.includes('not found') || errorText.includes('unsupported') || errorText.includes('overloaded') || errorText.includes('503') || errorText.includes('429');
+        if (!canTryNextModel) break;
+      }
+    }
+
+    throw lastError || new Error('Gemini request failed');
+  }
+
+  async function sendMessageToGemini(message) {
+    const userMessage = message.trim();
+    if (!userMessage || coachIsLoading) return;
+
+    chatMessages.push({ role: 'user', content: userMessage });
+    saveChatHistory();
+    recordTriggerFromText(userMessage);
+    addCoachMessage('user', userMessage);
+    if (coachInputEl) coachInputEl.value = '';
+
+    if (!GEMINI_API_KEY || GEMINI_API_KEY === 'PASTE_YOUR_GEMINI_API_KEY_HERE') {
+      const keyMessage = 'API ключ Gemini не добавлен. Вставьте ключ в переменную GEMINI_API_KEY.';
+      chatMessages.push({ role: 'model', content: keyMessage });
+      saveChatHistory();
+      addCoachMessage('assistant', keyMessage, 'error');
+      return;
+    }
+
+    setCoachLoading(true);
+    const loadingEl = addCoachMessage('assistant', 'Sana Coach думает...', 'loading');
+
+    try {
+      const assistantMessage = await callSanaCoachAPI(userMessage, buildSanaCoachContext());
+      chatMessages.push({ role: 'model', content: assistantMessage });
+      saveChatHistory();
+      if (loadingEl) {
+        loadingEl.className = 'coach-message assistant';
+        renderCoachMessageContent(loadingEl, assistantMessage);
+      } else {
+        addCoachMessage('assistant', assistantMessage);
+      }
+    } catch (error) {
+      console.error('Sana Coach Gemini error:', error);
+      const safeMessage = getGeminiUserErrorMessage(error);
+      chatMessages.push({ role: 'model', content: safeMessage });
+      saveChatHistory();
+      if (loadingEl) {
+        loadingEl.className = 'coach-message assistant error';
+        renderCoachMessageContent(loadingEl, safeMessage);
+      } else {
+        addCoachMessage('assistant', safeMessage, 'error');
+      }
+    } finally {
+      setCoachLoading(false);
+    }
+  }
+
+  if (coachSendBtn && coachInputEl) {
+    coachSendBtn.addEventListener('click', () => sendMessageToGemini(coachInputEl.value));
+    coachInputEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessageToGemini(coachInputEl.value);
+      }
+    });
+  }
+
+  document.querySelectorAll('.coach-quick-btn').forEach((button) => {
+    button.addEventListener('click', () => {
+      sendMessageToGemini(button.dataset.message || button.textContent);
+    });
+  });
+
+  function initSanaTynysTools() {
+    populateSettingsForm();
+    renderDashboard();
+    renderCalendar();
+    restoreChatHistory();
+
+    document.getElementById('saveQuitSettings')?.addEventListener('click', () => {
+      writeStorage(STORAGE_KEYS.quitSettings, readSettingsForm());
+      writeStorage(STORAGE_KEYS.userProfile, {
+        ...readStorage(STORAGE_KEYS.userProfile, {}),
+        updatedAt: new Date().toISOString()
+      });
+      const status = document.getElementById('settingsSaveStatus');
+      if (status) {
+        status.textContent = 'Сохранено';
+        setTimeout(() => { status.textContent = ''; }, 1800);
+      }
+      renderDashboard();
+      renderCalendar();
+    });
+
+    document.querySelectorAll('[data-calendar-status]').forEach((button) => {
+      button.addEventListener('click', () => saveCalendarStatus(button.dataset.calendarStatus));
+    });
+
+    document.getElementById('addCalendarNote')?.addEventListener('click', saveCalendarNote);
+
+    document.querySelectorAll('.checkin-btn').forEach((button) => {
+      button.addEventListener('click', () => saveCheckin(button.dataset.state || button.textContent.trim()));
+    });
+
+    document.getElementById('clearChatHistory')?.addEventListener('click', () => {
+      if (!confirm('Очистить историю Sana Coach в этом браузере?')) return;
+      chatMessages = [];
+      writeStorage(STORAGE_KEYS.chatHistory, []);
+      restoreChatHistory();
+    });
+
+    document.getElementById('downloadJournal')?.addEventListener('click', downloadJournal);
+  }
+
+  initSanaTynysTools();
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Animate trigger bars on scroll
+  const triggerSection = document.querySelector('.tracker-section');
+  let triggered = false;
+  const barObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !triggered) {
+      triggered = true;
+    }
+  });
+  if (triggerSection) barObserver.observe(triggerSection);
+</script>
+</body>
+</html>
